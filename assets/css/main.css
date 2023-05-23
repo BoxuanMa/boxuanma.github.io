@@ -1,4 +1,4 @@
-@import url("fontawesome-all.min.css");
+@import url("fontawesome-all.min.css"); 
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
 
 /*
@@ -106,19 +106,23 @@ input, select, textarea {
 	}
 
 	a {
+		text-decoration: none ;
 		-moz-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		-webkit-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+		/* -webkit-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out; */
 		-ms-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		border-bottom: solid 1px #e4e4e4;
+		border-bottom: solid 0px #e4e4e4;
 		color: inherit;
-		text-decoration: none;
+		
 	}
+
+
 
 		a:hover {
 			border-bottom-color: transparent;
-			color: #9B95C9 !important;
-			<!-#87CEFA->
+			color: #c8c3f0 !important;
+			
+			
 		}
 
 	strong, b {
@@ -142,9 +146,9 @@ input, select, textarea {
 	}
 
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-			border: 0;
+			border: none;
 			color: inherit;
-			text-decoration: none;
+			text-decoration: none !important;
 		}
 
 	h2 {
@@ -1786,7 +1790,7 @@ input, select, textarea {
 	}
 
 	header.major h2 {
-		color: #87CEFA;
+		color: #c8c3f0;
 		font-size: 3.5em;
 	}
 
@@ -1849,7 +1853,7 @@ input, select, textarea {
 		input[type="email"]:focus,
 		select:focus,
 		textarea:focus {
-			border-color: #87CEFA;
+			border-color: #c8c3f0;
 		}
 
 	select {
@@ -1954,7 +1958,7 @@ input, select, textarea {
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			border-color: #87CEFA;
+			border-color: #c8c3f0;
 		}
 
 	input[type="checkbox"] + label:before {
@@ -2211,7 +2215,7 @@ input, select, textarea {
 
 /* List */
 
-	ol {
+	/* ol {
 		list-style: decimal;
 		margin: 0 0 2.25em 0;
 		padding-left: 1.25em;
@@ -2219,7 +2223,43 @@ input, select, textarea {
 
 		ol li {
 			padding-left: 0.25em;
-		}
+		} */
+
+		ol {
+			list-style: none;
+			padding-left: 3.5rem
+		  }
+	
+		  ol>li {
+			counter-increment: my-ol-counter 1;
+			margin: .6em 0
+		  }
+	
+		  ol>li:hover {
+			text-shadow: 0 0 .01rem rgba(200,195,240, 0.5)
+		  }
+	
+		  ol>li:hover:before {
+			color: #f4f5f6;
+			background: #c8c3f0
+		  }
+	
+		  ol>li:before {
+			content: counter(my-ol-counter);
+			display: inline-block;
+			position: absolute;
+			width: 3rem;
+			height: 3rem;
+			margin-left: -3.5rem;
+			text-align: center;
+			color: rgba(200,195,240, .9);
+			line-height: 3rem;
+			font-size: 2.3rem;
+			border: 1px solid rgba(200,195,240, .7);
+			border-radius: 9px;
+			font-family: sans-serif;
+			font-weight: 300
+		  }	
 
 	ul {
 		list-style: disc;
@@ -2403,7 +2443,7 @@ input, select, textarea {
 			}
 
 			ul.feature-icons li:before {
-				background: #87CEFA;
+				background: #c8c3f0;
 				border-radius: 100%;
 				color: #ffffff;
 				display: block;
@@ -2619,7 +2659,7 @@ input, select, textarea {
 		input[type="reset"].primary,
 		input[type="button"].primary,
 		.button.primary {
-			background-color: #87CEFA;
+			background-color: #c8c3f0;
 			color: #ffffff !important;
 		}
 
@@ -2701,7 +2741,7 @@ input, select, textarea {
 		-webkit-justify-content: space-between;
 		-ms-justify-content: space-between;
 		justify-content: space-between;
-		background: #87CEFA;
+		background: #c8c3f0;
 		color: #d2f2e9;
 		height: 100%;
 		overflow-y: auto;
@@ -2752,7 +2792,7 @@ input, select, textarea {
 			}
 
 			#header > header p {
-				color: #d2f2e9;
+				color: #fff;
 				font-style: italic;
 				margin: 1em 0 0 0;
 			}
@@ -2790,7 +2830,7 @@ input, select, textarea {
 			}
 
 				#header > nav ul li {
-					border-top: solid 2px #87CEFA;
+					border-top: solid 2px #c8c3f0;
 					display: block;
 					padding: 0;
 				}
@@ -2809,7 +2849,7 @@ input, select, textarea {
 
 						#header > nav ul li a.active {
 							background: #fff;
-							color: #87CEFA !important;
+							color: #c8c3f0 !important;
 						}
 
 					#header > nav ul li:first-child {
@@ -3077,7 +3117,7 @@ input, select, textarea {
 					}
 
 					#titleBar .toggle:before {
-						background: #87CEFA;
+						background: #c8c3f0;
 						color: #ffffff;
 						content: '\f0c9';
 						display: block;
