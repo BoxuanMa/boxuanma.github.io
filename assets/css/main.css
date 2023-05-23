@@ -1808,7 +1808,7 @@ input, select, textarea {
 	}
 
 	label {
-		color: #777;
+		color: #fff;
 		display: block;
 		font-size: 0.9em;
 		font-weight: 700;
@@ -1907,7 +1907,7 @@ input, select, textarea {
 		input[type="checkbox"] + label,
 		input[type="radio"] + label {
 			text-decoration: none;
-			color: #888;
+			color: #c8c3f0;
 			cursor: pointer;
 			display: inline-block;
 			font-size: 1em;
@@ -1933,9 +1933,9 @@ input, select, textarea {
 
 			input[type="checkbox"] + label:before,
 			input[type="radio"] + label:before {
-				background: #fafafa;
+				background: #fff;
 				border-radius: 5px;
-				border: solid 2px #e4e4e4;
+				border: solid 2px #fff;
 				content: '';
 				display: inline-block;
 				font-size: 0.8em;
@@ -1950,15 +1950,15 @@ input, select, textarea {
 
 		input[type="checkbox"]:checked + label:before,
 		input[type="radio"]:checked + label:before {
-			background: #989898;
-			border-color: #989898;
-			color: #ffffff;
+			background: #fff;
+			border-color: #fff;
+			color: #c8c3f0;
 			content: '\f00c';
 		}
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			border-color: #c8c3f0;
+			border-color: #fff;
 		}
 
 	input[type="checkbox"] + label:before {
@@ -2289,6 +2289,34 @@ input, select, textarea {
 	dl {
 		margin: 0 0 2.25em 0;
 	}
+
+	input#japanese {
+        display: none;
+      }
+
+      #lang-toggler {
+        position: fixed;
+        top: 0;
+        right: 20;
+        z-index: 10;
+      }
+      #lang-toggler::before {
+        content: "Chinese";
+      }
+      input#japanese:checked + #lang-toggler::before {
+        content: "English";
+      }
+
+      .ja {
+        display: none;
+      }
+
+      input#japanese:checked ~ section .en {
+        display: none;
+      }
+      input#japanese:checked ~ section .ja {
+        display: unset;
+      }
 
 /* Actions */
 
@@ -2866,7 +2894,7 @@ input, select, textarea {
 /* Main */
 
 	#main > section {
-		border-top: solid 6px #f4f4f4;
+		border-top: solid 6px #fff;
 	}
 
 		#main > section > .container {
