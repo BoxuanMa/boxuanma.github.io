@@ -2301,10 +2301,10 @@ input, select, textarea {
         z-index: 10;
       }
       #lang-toggler::before {
-        content: "Chinese";
+        content: "Ja";
       }
       input#japanese:checked + #lang-toggler::before {
-        content: "English";
+        content: "En";
       }
 
       .ja {
