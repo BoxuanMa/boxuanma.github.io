@@ -2301,7 +2301,7 @@ input, select, textarea {
         z-index: 10;
       }
       #lang-toggler::before {
-        content: "Ja";
+        content: "Cn";
       }
       input#japanese:checked + #lang-toggler::before {
         content: "En";
