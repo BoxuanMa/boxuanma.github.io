@@ -82,13 +82,13 @@
             .labelLat(d => d.lat)
             .labelLng(d => d.lon)
             .labelText(d => d.name)
-            .labelSize(0.3)
+            .labelSize(d => d.size)
             .labelDotRadius(0.3)
             .labelColor(() => 'white')
             .pointsData(cities) // 点标记
             .pointLat(d => d.lat)
             .pointLng(d => d.lon)
-            .pointRadius(0.3)
+            .pointRadius(d => d.size)
             .pointAltitude(0.0)
             .pointColor(() => 'white')
 
