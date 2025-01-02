@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visited Places Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css">
+    <style>
+        #map {
+            width: 100%;
+            height: 600px; /* 设置地图高度 */
+        }
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 地图容器 -->
+    <h1>Places I've Visited</h1>
+    <div id="map"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ol/ol.js"></script>
+    <script>
+        // 地点数据
+        const places = [
+            { name: "Beijing", coordinates: [116.4074, 39.9042], date: "2023-03-10" },
+            { name: "Tokyo", coordinates: [139.6917, 35.6895], date: "2023-05-22" },
+            { name: "Paris", coordinates: [2.3522, 48.8566], date: "2023-08-14" }
+        ];
+
+        // 转换地点为 OpenLayers 投影格式
+        const features = places.map(place => new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.fromLonLat(place.coordinates)),
+            name: place.name,
+            date: place.date
+        }));
+
+        // 创建矢量图层
+        const vectorSource = new ol.source.Vector({ features });
+        const vectorLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: 7,
+                    fill: new ol.style.Fill({ color: 'red' }),
+                    stroke: new ol.style.Stroke({ color: 'white', width: 2 })
+                })
+            })
+        });
+
+        // 初始化地图
+        const map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                }),
+                vectorLayer
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([0, 20]),
+                zoom: 2
+            })
+        });
+
+        // 弹窗功能
+        const popupElement = document.createElement('div');
+        popupElement.className = 'ol-popup';
+        document.body.appendChild(popupElement);
+
+        const popupOverlay = new ol.Overlay({
+            element: popupElement,
+            autoPan: true,
+            autoPanAnimation: { duration: 250 }
+        });
+        map.addOverlay(popupOverlay);
+
+        map.on('singleclick', function (evt) {
+            const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+                return feature;
+            });
+            if (feature) {
+                const coordinates = feature.getGeometry().getCoordinates();
+                const name = feature.get('name');
+                const date = feature.get('date');
+                popupOverlay.setPosition(coordinates);
+                popupElement.innerHTML = `<b>${name}</b><br>Visited on: ${date}`;
+            } else {
+                popupOverlay.setPosition(undefined);
+            }
+        });
+    </script>
+</body>
+</html>
