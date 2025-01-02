@@ -55,19 +55,19 @@
         const globe = Globe()(document.getElementById('globe'))
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
             .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
-            //.labelsData(cities) // 标签数据
-            //.labelLat(d => d.lat)
-            //.labelLng(d => d.lon)
+            .labelsData(cities) // 标签数据
+            .labelLat(d => d.lat)
+            .labelLng(d => d.lon)
             //.labelText(d => d.name)
-            //.labelSize(0.4)
-            //.labelDotRadius(0.2)
-            //.labelColor(() => 'white')
-            .pointsData(cities) // 点标记
-            .pointLat(d => d.lat)
-            .pointLng(d => d.lon)
-            .pointRadius(0.3)
-            .pointAltitude(0.0)
-            .pointColor(() => 'white')
+            .labelSize(0.4)
+            .labelDotRadius(0.3)
+            .labelColor(() => 'white')
+            //.pointsData(cities) // 点标记
+            //.pointLat(d => d.lat)
+            //.pointLng(d => d.lon)
+            //.pointRadius(0.3)
+            //.pointAltitude(0.0)
+            //.pointColor(() => 'white')
 
         // 禁用自动旋转
         globe.controls().autoRotate = false;
