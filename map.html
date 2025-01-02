@@ -1,103 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visited Places Map</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css">
+    <title>Visited Cities Globe</title>
+    <script src="https://unpkg.com/globe.gl"></script>
     <style>
-        #map {
-            width: 100%;
-            height: 600px; /* 设置地图高度 */
+        body {
+            margin: 0;
+            overflow: hidden;
         }
-        .ol-popup {
-            position: absolute;
-            background-color: white;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #cccccc;
-            bottom: 12px;
-            left: -50px;
-            min-width: 200px;
+        #globe {
+            width: 100%;
+            height: 100vh;
         }
     </style>
 </head>
 <body>
-    <!-- 地图容器 -->
-    <h1>Places I've Visited</h1>
-    <div id="map"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/ol/ol.js"></script>
+    <div id="globe"></div>
     <script>
-        // 地点数据
-        const places = [
-            { name: "Beijing", coordinates: [116.4074, 39.9042], date: "2023-03-10" },
-            { name: "Tokyo", coordinates: [139.6917, 35.6895], date: "2023-05-22" },
-            { name: "Paris", coordinates: [2.3522, 48.8566], date: "2023-08-14" }
+        // 数据：您去过的城市及其坐标
+        const cities = [
+            { name: "Beijing", lat: 39.9042, lon: 116.4074, date: "2023-03-10" },
+            { name: "Tokyo", lat: 35.6895, lon: 139.6917, date: "2023-05-22" },
+            { name: "Paris", lat: 48.8566, lon: 2.3522, date: "2023-08-14" },
+            { name: "New York", lat: 40.7128, lon: -74.0060, date: "2023-09-01" },
+            { name: "Sydney", lat: -33.8688, lon: 151.2093, date: "2023-11-20" }
         ];
 
-        // 转换地点为 OpenLayers 投影格式
-        const features = places.map(place => new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.fromLonLat(place.coordinates)),
-            name: place.name,
-            date: place.date
-        }));
-
-        // 创建矢量图层
-        const vectorSource = new ol.source.Vector({ features });
-        const vectorLayer = new ol.layer.Vector({
-            source: vectorSource,
-            style: new ol.style.Style({
-                image: new ol.style.Circle({
-                    radius: 7,
-                    fill: new ol.style.Fill({ color: 'red' }),
-                    stroke: new ol.style.Stroke({ color: 'white', width: 2 })
-                })
-            })
-        });
-
-        // 初始化地图
-        const map = new ol.Map({
-            target: 'map',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                }),
-                vectorLayer
-            ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([0, 20]),
-                zoom: 2
-            })
-        });
-
-        // 弹窗功能
-        const popupElement = document.createElement('div');
-        popupElement.className = 'ol-popup';
-        document.body.appendChild(popupElement);
-
-        const popupOverlay = new ol.Overlay({
-            element: popupElement,
-            autoPan: true,
-            autoPanAnimation: { duration: 250 }
-        });
-        map.addOverlay(popupOverlay);
-
-        map.on('singleclick', function (evt) {
-            const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
-                return feature;
-            });
-            if (feature) {
-                const coordinates = feature.getGeometry().getCoordinates();
-                const name = feature.get('name');
-                const date = feature.get('date');
-                popupOverlay.setPosition(coordinates);
-                popupElement.innerHTML = `<b>${name}</b><br>Visited on: ${date}`;
-            } else {
-                popupOverlay.setPosition(undefined);
+        // 飞行路线数据
+        const arcs = cities.map((city, index) => {
+            if (index < cities.length - 1) {
+                return {
+                    startLat: city.lat,
+                    startLng: city.lon,
+                    endLat: cities[index + 1].lat,
+                    endLng: cities[index + 1].lon,
+                    color: ['red', 'yellow']
+                };
             }
-        });
+            return null;
+        }).filter(arc => arc !== null);
+
+        // 初始化 Globe.gl
+        const globe = Globe()(document.getElementById('globe'))
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg') // 地球样式
+            .arcsData(arcs)
+            .arcColor('color')
+            .arcDashLength(0.4)
+            .arcDashGap(1)
+            .arcDashInitialGap(() => Math.random())
+            .arcDashAnimateTime(4000) // 动画时间
+            .labelsData(cities)
+            .labelLat(d => d.lat)
+            .labelLng(d => d.lon)
+            .labelText(d => `${d.name} (${d.date})`)
+            .labelSize(0.8)
+            .labelDotRadius(0.5)
+            .labelColor(() => 'white')
+            .labelResolution(2)
+            .labelAltitude(0.01) // 提升标签高度
+            .pointsData(cities)
+            .pointLat(d => d.lat)
+            .pointLng(d => d.lon)
+            .pointRadius(0.2)
+            .pointColor(() => 'orange')
+            .pointAltitude(0.01); // 点的高度
+
+        // 旋转地球以便展示
+        globe.controls().autoRotate = true;
+        globe.controls().autoRotateSpeed = 0.5;
     </script>
 </body>
 </html>
