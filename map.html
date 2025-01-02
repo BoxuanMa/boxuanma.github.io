@@ -19,53 +19,59 @@
     <script>
         // 数据：您去过的城市及其坐标
         const cities = [
-            { name: "Beijing", lat: 39.9042, lon: 116.4074, date: "2023-03-10" },
-            { name: "Tokyo", lat: 35.6895, lon: 139.6917, date: "2023-05-22" },
-            { name: "Paris", lat: 48.8566, lon: 2.3522, date: "2023-08-14" },
-            { name: "New York", lat: 40.7128, lon: -74.0060, date: "2023-09-01" },
-            { name: "Sydney", lat: -33.8688, lon: 151.2093, date: "2023-11-20" }
+            { name: "北京", lat: 39.9042, lon: 116.4074 },
+            { name: "上海", lat: 31.2304, lon: 121.4737 },
+            { name: "成都", lat: 30.5728, lon: 104.0668 },
+            { name: "广元", lat: 32.4355, lon: 105.8436 },
+            { name: "陇南", lat: 33.3948, lon: 104.9294 },
+            { name: "兰州", lat: 36.0611, lon: 103.8343 },
+            { name: "大理", lat: 25.5847, lon: 100.2127 },
+            { name: "丽江", lat: 26.8721, lon: 100.2383 },
+            { name: "西双版纳", lat: 22.0088, lon: 100.7971 },
+            { name: "深圳", lat: 22.5431, lon: 114.0579 },
+            { name: "福冈", lat: 33.5902, lon: 130.4017 },
+            { name: "鹿儿岛", lat: 31.5966, lon: 130.5571 },
+            { name: "熊本", lat: 32.8031, lon: 130.7079 },
+            { name: "广岛", lat: 34.3853, lon: 132.4553 },
+            { name: "北九州", lat: 33.8833, lon: 130.8753 },
+            { name: "大分", lat: 33.2382, lon: 131.6126 },
+            { name: "长崎", lat: 32.7503, lon: 129.8777 },
+            { name: "大阪", lat: 34.6937, lon: 135.5023 },
+            { name: "京都", lat: 35.0116, lon: 135.7681 },
+            { name: "东京", lat: 35.6895, lon: 139.6917 },
+            { name: "横滨", lat: 35.4437, lon: 139.638 },
+            { name: "秋田", lat: 39.7186, lon: 140.1024 },
+            { name: "札幌", lat: 43.0621, lon: 141.3544 },
+            { name: "班加罗尔", lat: 12.9716, lon: 77.5946 },
+            { name: "新加坡", lat: 1.3521, lon: 103.8198 },
+            { name: "香港", lat: 22.3193, lon: 114.1694 },
+            { name: "法兰克福", lat: 50.1109, lon: 8.6821 },
+            { name: "累西腓", lat: -8.0476, lon: -34.877 },
+            { name: "圣保罗", lat: -23.5505, lon: -46.6333 },
+            { name: "萨格勒布", lat: 45.815, lon: 15.9819 }
         ];
-
-        // 飞行路线数据
-        const arcs = cities.map((city, index) => {
-            if (index < cities.length - 1) {
-                return {
-                    startLat: city.lat,
-                    startLng: city.lon,
-                    endLat: cities[index + 1].lat,
-                    endLng: cities[index + 1].lon,
-                    color: ['red', 'yellow']
-                };
-            }
-            return null;
-        }).filter(arc => arc !== null);
 
         // 初始化 Globe.gl
         const globe = Globe()(document.getElementById('globe'))
-            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg') // 地球样式
-            .arcsData(arcs)
-            .arcColor('color')
-            .arcDashLength(0.4)
-            .arcDashGap(1)
-            .arcDashInitialGap(() => Math.random())
-            .arcDashAnimateTime(4000) // 动画时间
-            .labelsData(cities)
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg') // 替换样式为深色地球
+            .backgroundColor('#c8c3f0') // 地球背景颜色
+            .labelsData(cities) // 标签数据
             .labelLat(d => d.lat)
             .labelLng(d => d.lon)
-            .labelText(d => `${d.name} (${d.date})`)
+            .labelText(d => d.name)
             .labelSize(0.8)
-            .labelDotRadius(0.5)
+            .labelDotRadius(0.3)
             .labelColor(() => 'white')
             .labelResolution(2)
-            .labelAltitude(0.01) // 提升标签高度
-            .pointsData(cities)
+            .labelAltitude(0.01) // 标签高度
+            .pointsData(cities) // 点标记
             .pointLat(d => d.lat)
             .pointLng(d => d.lon)
-            .pointRadius(0.2)
+            .pointRadius(0.15)
             .pointColor(() => 'orange')
             .pointAltitude(0.01); // 点的高度
 
-        // 旋转地球以便展示
+        // 自动旋转设置
         globe.controls().autoRotate = true;
         globe.controls().autoRotateSpeed = 0.5;
     </script>
