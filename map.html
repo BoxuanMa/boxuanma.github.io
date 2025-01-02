@@ -55,7 +55,13 @@
         const globe = Globe()(document.getElementById('globe'))
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
             .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
-
+            .labelsData(cities) // 标签数据
+            .labelLat(d => d.lat)
+            .labelLng(d => d.lon)
+            .labelText(d => d.name)
+            .labelSize(0.4)
+            .labelDotRadius(0.2)
+            .labelColor(() => 'white')
             .pointsData(cities) // 点标记
             .pointLat(d => d.lat)
             .pointLng(d => d.lon)
@@ -70,24 +76,7 @@
         globe.controls().minZoom = 1; // 设置最小缩放
         globe.controls().maxZoom = 5; // 设置最大缩放
 
-        // 获取 tooltip 元素
-        const tooltip = document.getElementById('tooltip');
 
-        // 鼠标悬停事件
-        globe.onPointHover(point => {
-            if (point) {
-                tooltip.style.display = 'block';
-                tooltip.innerHTML = point.name; // 显示城市名称
-            } else {
-                tooltip.style.display = 'none';
-            }
-        });
-
-        // 更新 tooltip 位置
-        document.addEventListener('mousemove', event => {
-            tooltip.style.left = `${event.pageX + 10}px`;
-            tooltip.style.top = `${event.pageY + 10}px`;
-        });
 
     </script>
 </body>
