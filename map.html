@@ -85,12 +85,12 @@
             .labelSize(0.3)
             .labelDotRadius(0.3)
             .labelColor(() => 'white')
-            //.pointsData(cities) // 点标记
-            //.pointLat(d => d.lat)
-            //.pointLng(d => d.lon)
-            //.pointRadius(0.3)
-            //.pointAltitude(0.0)
-            //.pointColor(() => 'white')
+            .pointsData(cities) // 点标记
+            .pointLat(d => d.lat)
+            .pointLng(d => d.lon)
+            .pointRadius(0.3)
+            .pointAltitude(0.0)
+            .pointColor(() => 'white')
 
         // 禁用自动旋转
         globe.controls().autoRotate = false;
