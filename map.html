@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Optimized Globe</title>
+    <title>Visited Cities Globe</title>
     <script src="https://unpkg.com/globe.gl"></script>
     <style>
         body {
@@ -39,31 +39,40 @@
             { name: "Osaka", lat: 34.6937, lon: 135.5023 },
             { name: "Kyoto", lat: 35.0116, lon: 135.7681 },
             { name: "Tokyo", lat: 35.6895, lon: 139.6917 },
-            { name: "Yokohama", lat: 35.4437, lon: 139.6380 }
+            { name: "Yokohama", lat: 35.4437, lon: 139.6380 },
+            { name: "Akita", lat: 39.7200, lon: 140.1030 },
+            { name: "Sapporo", lat: 43.0618, lon: 141.3545 },
+            { name: "Bangalore", lat: 12.9716, lon: 77.5946 },
+            { name: "Singapore", lat: 1.3521, lon: 103.8198 },
+            { name: "Hong Kong", lat: 22.3193, lon: 114.1694 },
+            { name: "Frankfurt", lat: 50.1109, lon: 8.6821 },
+            { name: "Recife", lat: -8.0476, lon: -34.877 },
+            { name: "Sao Paulo", lat: -23.5505, lon: -46.6333 },
+            { name: "Zagreb", lat: 45.8150, lon: 15.9819 }
         ];
 
         // 初始化 Globe.gl
         const globe = Globe()(document.getElementById('globe'))
-            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-light.jpg') 
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+            .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
             .labelsData(cities) // 标签数据
             .labelLat(d => d.lat)
             .labelLng(d => d.lon)
             .labelText(d => d.name)
-            .labelSize(0.6) // 缩小标签大小
+            .labelSize(0.8)
             .labelDotRadius(0.3)
             .labelColor(() => 'white')
-            .labelAltitude(d => 0.01 + (d.lat / 90)) // 标签分层
+            .labelResolution(2)
+            .labelAltitude(0.01) // 标签高度
             .pointsData(cities) // 点标记
             .pointLat(d => d.lat)
             .pointLng(d => d.lon)
             .pointRadius(0.15)
             .pointColor(() => 'orange')
-            .pointAltitude(0.01);
+            .pointAltitude(0.01); // 点的高度
 
-        // 启用缩放
-        globe.controls().enableZoom = true;
-        globe.controls().minZoom = 1;
-        globe.controls().maxZoom = 5;
+        // 禁用自动旋转
+        globe.controls().autoRotate = false;
     </script>
 </body>
 </html>
