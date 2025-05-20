@@ -2260,7 +2260,7 @@ input, select, textarea {
 		  }
 	
 		  ol>li {
-			counter-increment: my-ol-counter 1;
+			counter-increment: my-ol-counter -1;
 			margin: .6em 0
 		  }
 	
