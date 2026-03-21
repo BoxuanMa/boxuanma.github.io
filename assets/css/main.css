@@ -2770,8 +2770,8 @@ input, select, textarea {
 		-webkit-justify-content: space-between;
 		-ms-justify-content: space-between;
 		justify-content: space-between;
-		background: #c8c3f0;
-		color: #d2f2e9;
+		background: linear-gradient(160deg, #c8c3f0 0%, #7c5cbf 30%, #6b4daf 50%, #4a3f8f 70%, #2d2b6e 88%, #1a1a3e 100%);
+		color: rgba(255, 255, 255, 0.8);
 		height: 100%;
 		overflow-y: auto;
 		position: fixed;
@@ -2790,11 +2790,12 @@ input, select, textarea {
 			}
 
 		#header header p {
-			color: #b7eadc;
+			color: rgba(255, 255, 255, 0.7);
 		}
 
 		#header a {
-			color: #d2f2e9;
+			color: rgba(255, 255, 255, 0.8);
+			transition: color 0.3s ease;
 		}
 
 			#header a:hover {
@@ -2813,6 +2814,14 @@ input, select, textarea {
 				display: block;
 				margin: 0 auto 2.25em auto;
 				width: 8em;
+				border-radius: 50%;
+				box-shadow: 0 0 20px rgba(124, 92, 191, 0.5), 0 0 40px rgba(124, 92, 191, 0.2);
+				transition: box-shadow 0.3s ease, transform 0.3s ease;
+			}
+
+			#header > header .avatar:hover {
+				box-shadow: 0 0 25px rgba(124, 92, 191, 0.7), 0 0 50px rgba(124, 92, 191, 0.3);
+				transform: scale(1.05);
 			}
 
 			#header > header h1 {
@@ -2821,7 +2830,7 @@ input, select, textarea {
 			}
 
 			#header > header p {
-				color: #fff;
+				color: rgba(255, 255, 255, 0.7);
 				font-style: italic;
 				margin: 1em 0 0 0;
 			}
@@ -2842,7 +2851,14 @@ input, select, textarea {
 			}
 
 				#header > footer .icons li a {
-					color: #ffffff;
+					color: rgba(255, 255, 255, 0.6);
+					transition: color 0.3s ease, transform 0.3s ease;
+					display: inline-block;
+				}
+
+				#header > footer .icons li a:hover {
+					color: #ffffff !important;
+					transform: translateY(-2px);
 				}
 
 		#header > nav {
@@ -2859,26 +2875,37 @@ input, select, textarea {
 			}
 
 				#header > nav ul li {
-					border-top: solid 2px #c8c3f0;
+					border-top: 0;
 					display: block;
 					padding: 0;
 				}
 
 					#header > nav ul li a {
-						-moz-transition: none;
-						-webkit-transition: none;
-						-ms-transition: none;
-						transition: none;
+						-moz-transition: all 0.3s ease;
+						-webkit-transition: all 0.3s ease;
+						-ms-transition: all 0.3s ease;
+						transition: all 0.3s ease;
 						border: 0;
-						color: #ffffff !important;
+						color: rgba(255, 255, 255, 0.85) !important;
 						display: block;
 						padding: 0.85em 0;
 						text-decoration: none;
+						letter-spacing: 0.05em;
+						position: relative;
+					}
+
+					#header > nav ul li a:hover {
+						background: rgba(255, 255, 255, 0.1);
+						color: #ffffff !important;
+						letter-spacing: 0.08em;
 					}
 
 						#header > nav ul li a.active {
-							background: #fff;
-							color: #c8c3f0 !important;
+							background: rgba(255, 255, 255, 0.15);
+							color: #ffffff !important;
+							backdrop-filter: blur(10px);
+							-webkit-backdrop-filter: blur(10px);
+							box-shadow: inset 3px 0 0 #a78bfa;
 						}
 
 					#header > nav ul li:first-child {
@@ -3146,7 +3173,7 @@ input, select, textarea {
 					}
 
 					#titleBar .toggle:before {
-						background: #c8c3f0;
+						background: linear-gradient(160deg, #2d2b6e, #7c5cbf);
 						color: #ffffff;
 						content: '\f0c9';
 						display: block;
