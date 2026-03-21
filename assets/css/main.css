@@ -2816,7 +2816,7 @@ input, select, textarea {
 				width: 8em;
 				border-radius: 50%;
 				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-				border: 3px solid rgba(255, 255, 255, 0.3);
+				border: 3px solid #ffffff;
 				transition: box-shadow 0.3s ease, transform 0.3s ease;
 			}
 
