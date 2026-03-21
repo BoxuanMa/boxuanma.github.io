@@ -2815,13 +2815,13 @@ input, select, textarea {
 				margin: 0 auto 2.25em auto;
 				width: 8em;
 				border-radius: 50%;
-				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+				box-shadow: none;
 				border: none;
-				transition: box-shadow 0.3s ease, transform 0.3s ease;
+				background: transparent;
+				transition: transform 0.3s ease;
 			}
 
 			#header > header .avatar:hover {
-				box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 				transform: scale(1.05);
 			}
 
