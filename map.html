@@ -1,115 +1,346 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Visited Cities Globe</title>
-    <script src="https://unpkg.com/globe.gl"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cities Visited</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
+        :root {
+            --bg: #f5f0e8;
+            --text: #3a3532;
+            --text-dim: rgba(58,53,50,0.55);
+            --panel-bg: rgba(255,255,252,0.88);
+            --panel-border: rgba(58,53,50,0.08);
+            --asia: #d4613a;
+            --europe: #2e7abf;
+            --south-america: #c74480;
         }
-        #globe {
-            width: 100%;
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
             height: 100vh;
+        }
+
+        #map { width: 100%; height: 100vh; z-index: 1; }
+
+        .overlay-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 24px 32px 28px;
+            background: linear-gradient(to bottom, rgba(245,240,232,0.95) 0%, rgba(245,240,232,0.5) 70%, transparent 100%);
+            pointer-events: none;
+            animation: fadeDown 0.8s ease-out;
+        }
+
+        .overlay-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 26px;
+            letter-spacing: 0.02em;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .overlay-header p {
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--text-dim);
+            letter-spacing: 0.03em;
+        }
+
+        .panel {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 1000;
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            animation: fadeUp 0.8s ease-out 0.2s both;
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-dim);
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .legend-item:hover { color: var(--text); }
+
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-count {
+            margin-left: auto;
+            font-size: 11px;
+            opacity: 0.6;
+        }
+
+        .legend-divider {
+            height: 1px;
+            background: var(--panel-border);
+            margin: 6px 0;
+        }
+
+        .legend-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .legend-total .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--asia), var(--europe));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Popup styles */
+        .leaflet-popup-content-wrapper {
+            background: var(--panel-bg) !important;
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--panel-border) !important;
+            border-radius: 8px !important;
+            color: var(--text) !important;
+            font-family: 'DM Sans', sans-serif !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+        }
+
+        .leaflet-popup-tip {
+            background: var(--panel-bg) !important;
+        }
+
+        .leaflet-popup-content {
+            margin: 10px 14px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+        }
+
+        .popup-region {
+            font-size: 11px;
+            font-weight: 300;
+            opacity: 0.55;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+
+        .leaflet-popup-close-button {
+            color: var(--text-dim) !important;
+        }
+
+        /* Override Leaflet zoom control */
+        .leaflet-control-zoom a {
+            background: var(--panel-bg) !important;
+            color: var(--text) !important;
+            border-color: var(--panel-border) !important;
+        }
+
+        .leaflet-control-zoom a:hover {
+            background: rgba(255,255,252,0.95) !important;
+        }
+
+        .leaflet-control-attribution {
+            background: rgba(245,240,232,0.7) !important;
+            color: var(--text-dim) !important;
+            font-size: 10px !important;
+        }
+
+        .leaflet-control-attribution a {
+            color: var(--text-dim) !important;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .overlay-header { padding: 16px 20px 14px; }
+            .overlay-header h1 { font-size: 20px; }
+            .panel { left: 12px; bottom: 12px; padding: 12px 16px; }
         }
     </style>
 </head>
 <body>
-    <div id="globe"></div>
+    <div class="overlay-header">
+        <h1>Cities Visited</h1>
+        <p>Conferences, research visits, and travel</p>
+    </div>
+
+    <div class="panel">
+        <div class="legend" id="legend"></div>
+        <div class="legend-divider"></div>
+        <div class="legend-total">
+            <span>Cities</span>
+            <span class="num" id="city-count">0</span>
+        </div>
+        <div class="legend-total" style="margin-top:2px;">
+            <span>Countries & Regions</span>
+            <span class="num" id="country-count">0</span>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
     <script>
-        // 数据：每个城市名称及其正确的经纬度
-        const cities1 = [
-            { name: "Beijing", lat: 39.9042, lon: 116.4074 },
-            { name: "Shanghai", lat: 31.2304, lon: 121.4737 },
-            { name: "Chengdu", lat: 30.5728, lon: 104.0668 },
-            { name: "Guangyuan", lat: 32.4355, lon: 105.8436 },
-            { name: "Longnan", lat: 33.3948, lon: 104.9294 },
-            { name: "Lanzhou", lat: 36.0611, lon: 103.8343 },
-            { name: "Dali", lat: 25.5847, lon: 100.2127 },
-            { name: "Lijiang", lat: 26.8721, lon: 100.2383 },
-            { name: "Xishuangbanna", lat: 21.9706, lon: 100.8563 },
-            { name: "Shenzhen", lat: 22.5431, lon: 114.0579 },
-            { name: "Fukuoka", lat: 33.5902, lon: 130.4017 },
-            { name: "Kagoshima", lat: 31.5966, lon: 130.5571 },
-            { name: "Kumamoto", lat: 32.8031, lon: 130.7079 },
-            { name: "Hiroshima", lat: 34.3853, lon: 132.4553 },
-            { name: "Kitakyushu", lat: 33.8338, lon: 130.8731 },
-            { name: "Oita", lat: 33.2382, lon: 131.6126 },
-            { name: "Nagasaki", lat: 32.7503, lon: 129.8777 },
-            { name: "Osaka", lat: 34.6937, lon: 135.5023 },
-            { name: "Kyoto", lat: 35.0116, lon: 135.7681 },
-            { name: "Tokyo", lat: 35.6895, lon: 139.6917 },
-            { name: "Yokohama", lat: 35.4437, lon: 139.6380 }
-        ];
         const cities = [
-            { name: "Beijing", lat: 39.9042, lon: 116.4074, size: 0.5},
-            { name: "Shanghai", lat: 31.2304, lon: 121.4737 , size:0.5},
-            { name: "Chengdu", lat: 30.5728, lon: 104.0668 , size:0.5},
-            { name: "Guangyuan", lat: 32.4355, lon: 105.8436 , size:0.5},
-            { name: "Longnan", lat: 33.3948, lon: 104.9294 , size:0.5},
-            { name: "Lanzhou", lat: 36.0611, lon: 103.8343 , size:0.5},
-            { name: "Dali", lat: 25.5847, lon: 100.2127 , size:0.2},
-            { name: "Lijiang", lat: 26.8721, lon: 100.2383 , size:0.2},
-            { name: "Xishuangbanna", lat: 21.9706, lon: 100.8563 , size:0.2},
-            { name: "Shenzhen", lat: 22.5431, lon: 114.0579 , size:0.2},
-            { name: "Zhengzhou", lat: 34.7466, lon: 113.6254 , size:0.2}, 
-            { name: "Kaifeng", lat: 34.7973, lon: 114.3076 , size:0.2},   
-            { name: "Luoyang", lat: 34.6197, lon: 112.4540 , size:0.2},    
-            { name: "Xi'an", lat: 34.3416, lon: 108.9398 , size:0.2},   
-            { name: "Fukuoka", lat: 33.5902, lon: 130.4017 , size:0.1},
-            { name: "Kagoshima", lat: 31.5966, lon: 130.5571 , size:0.1},
-            { name: "Kumamoto", lat: 32.8031, lon: 130.7079 , size:0.1},
-            { name: "Hiroshima", lat: 34.3853, lon: 132.4553 , size:0.1},
-            { name: "Kitakyushu", lat: 33.8338, lon: 130.8731 , size:0.1},
-            { name: "Oita", lat: 33.2382, lon: 131.6126 , size:0.1},
-            { name: "Nagasaki", lat: 32.7503, lon: 129.8777 , size:0.1},
-            { name: "Osaka", lat: 34.6937, lon: 135.5023 , size:0.2},
-            { name: "Kyoto", lat: 35.0116, lon: 135.7681 , size:0.2},
-            { name: "Tokyo", lat: 35.6895, lon: 139.6917 , size:0.2},
-            { name: "Yokohama", lat: 35.4437, lon: 139.6380 , size:0.1},
-            { name: "Akita", lat: 39.7200, lon: 140.1030 , size:0.5},
-            { name: "Sapporo", lat: 43.0618, lon: 141.3545 , size:0.5},
-            { name: "Bangalore", lat: 12.9716, lon: 77.5946 , size:0.5},
-            { name: "Singapore", lat: 1.3521, lon: 103.8198 , size:0.5},
-            { name: "Hong Kong", lat: 22.3193, lon: 114.1694 , size:0.5},
-            { name: "Frankfurt", lat: 50.1109, lon: 8.6821 , size:0.5},
-            { name: "Recife", lat: -8.0476, lon: -34.877 , size:0.5},
-            { name: "Sao Paulo", lat: -23.5505, lon: -46.6333 , size:0.5},
-            { name: "Zagreb", lat: 45.8150, lon: 15.9819, size:0.5 },
-            { name: "Dublin", lat: 53.3331, lon: -6.2489 , size:0.5},      // 爱尔兰-都柏林
-            { name: "Changhua", lat: 24.0667, lon: 120.5333 , size:0.5},   // 台湾-彰化
-            { name: "Taipei", lat: 25.0330, lon: 121.5654 , size:0.5},     // 台湾-台北
-            { name: "Palermo", lat: 38.1157, lon: 13.3615 , size:0.5},     // 意大利-巴勒莫
-            { name: "Cefalu", lat: 38.0385, lon: 14.0181 , size:0.5}       // 意大利-切法卢
+            // China
+            { name: "Beijing", lat: 39.9042, lon: 116.4074, country: "China", area: "Asia" },
+            { name: "Shanghai", lat: 31.2304, lon: 121.4737, country: "China", area: "Asia" },
+            { name: "Chengdu", lat: 30.5728, lon: 104.0668, country: "China", area: "Asia" },
+            { name: "Guangyuan", lat: 32.4355, lon: 105.8436, country: "China", area: "Asia" },
+            { name: "Longnan", lat: 33.3948, lon: 104.9294, country: "China", area: "Asia" },
+            { name: "Lanzhou", lat: 36.0611, lon: 103.8343, country: "China", area: "Asia" },
+            { name: "Dali", lat: 25.5847, lon: 100.2127, country: "China", area: "Asia" },
+            { name: "Lijiang", lat: 26.8721, lon: 100.2383, country: "China", area: "Asia" },
+            { name: "Xishuangbanna", lat: 21.9706, lon: 100.8563, country: "China", area: "Asia" },
+            { name: "Shenzhen", lat: 22.5431, lon: 114.0579, country: "China", area: "Asia" },
+            { name: "Zhengzhou", lat: 34.7466, lon: 113.6254, country: "China", area: "Asia" },
+            { name: "Kaifeng", lat: 34.7973, lon: 114.3076, country: "China", area: "Asia" },
+            { name: "Luoyang", lat: 34.6197, lon: 112.4540, country: "China", area: "Asia" },
+            { name: "Xi'an", lat: 34.3416, lon: 108.9398, country: "China", area: "Asia" },
+
+            // Japan
+            { name: "Fukuoka", lat: 33.5902, lon: 130.4017, country: "Japan", area: "Asia" },
+            { name: "Kagoshima", lat: 31.5966, lon: 130.5571, country: "Japan", area: "Asia" },
+            { name: "Kumamoto", lat: 32.8031, lon: 130.7079, country: "Japan", area: "Asia" },
+            { name: "Hiroshima", lat: 34.3853, lon: 132.4553, country: "Japan", area: "Asia" },
+            { name: "Kitakyushu", lat: 33.8338, lon: 130.8731, country: "Japan", area: "Asia" },
+            { name: "Oita", lat: 33.2382, lon: 131.6126, country: "Japan", area: "Asia" },
+            { name: "Nagasaki", lat: 32.7503, lon: 129.8777, country: "Japan", area: "Asia" },
+            { name: "Osaka", lat: 34.6937, lon: 135.5023, country: "Japan", area: "Asia" },
+            { name: "Kyoto", lat: 35.0116, lon: 135.7681, country: "Japan", area: "Asia" },
+            { name: "Tokyo", lat: 35.6895, lon: 139.6917, country: "Japan", area: "Asia" },
+            { name: "Yokohama", lat: 35.4437, lon: 139.6380, country: "Japan", area: "Asia" },
+            { name: "Akita", lat: 39.7200, lon: 140.1030, country: "Japan", area: "Asia" },
+            { name: "Sapporo", lat: 43.0618, lon: 141.3545, country: "Japan", area: "Asia" },
+
+            // Asia (Other)
+            { name: "Bangalore", lat: 12.9716, lon: 77.5946, country: "India", area: "Asia" },
+            { name: "Singapore", lat: 1.3521, lon: 103.8198, country: "Singapore", area: "Asia" },
+            { name: "Hong Kong", lat: 22.3193, lon: 114.1694, country: "Hong Kong, China", area: "Asia" },
+            { name: "Changhua", lat: 24.0667, lon: 120.5333, country: "Taiwan", area: "Asia" },
+            { name: "Taipei", lat: 25.0330, lon: 121.5654, country: "Taiwan", area: "Asia" },
+
+            // Europe
+            { name: "Frankfurt", lat: 50.1109, lon: 8.6821, country: "Germany", area: "Europe" },
+            { name: "Zagreb", lat: 45.8150, lon: 15.9819, country: "Croatia", area: "Europe" },
+            { name: "Dublin", lat: 53.3331, lon: -6.2489, country: "Ireland", area: "Europe" },
+            { name: "Palermo", lat: 38.1157, lon: 13.3615, country: "Italy", area: "Europe" },
+            { name: "Cefalù", lat: 38.0385, lon: 14.0181, country: "Italy", area: "Europe" },
+            { name: "Bergen", lat: 60.3913, lon: 5.3221, country: "Norway", area: "Europe" },
+            { name: "Stockholm", lat: 59.3293, lon: 18.0686, country: "Sweden", area: "Europe" },
+
+            // Americas
+            { name: "Recife", lat: -8.0476, lon: -34.877, country: "Brazil", area: "South America" },
+            { name: "São Paulo", lat: -23.5505, lon: -46.6333, country: "Brazil", area: "South America" },
         ];
 
-        // 初始化 Globe.gl
-        const globe = Globe()(document.getElementById('globe'))
-            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
-            .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
-            //.labelsData(cities) // 标签数据
-            //.labelLat(d => d.lat)
-            //.labelLng(d => d.lon)
-            //.labelText(d => d.name)
-            //.labelSize(d => d.size)
-            //.labelDotRadius(0.3)
-            //.labelColor(() => 'white')
-            .pointsData(cities) // 点标记
-            .pointLat(d => d.lat)
-            .pointLng(d => d.lon)
-            .pointRadius(d => d.size)
-            .pointAltitude(0.0)
-            .pointColor(() => 'orange')
+        const areaOrder = ["Asia", "Europe", "South America"];
+        const areaColors = {
+            "Asia": "#d4613a",
+            "Europe": "#2e7abf",
+            "South America": "#c74480",
+        };
 
-        // 禁用自动旋转
-        globe.controls().autoRotate = false;
+        // Build legend — one row per continent
+        const legendEl = document.getElementById("legend");
+        areaOrder.forEach(area => {
+            const areaCities = cities.filter(c => c.area === area);
+            const areaCountries = new Set(areaCities.map(c => c.country)).size;
+            const item = document.createElement("div");
+            item.className = "legend-item";
+            item.innerHTML = `<div class="legend-dot" style="background:${areaColors[area]}"></div>${area}<span class="legend-count">${areaCountries} countries & regions · ${areaCities.length} cities</span>`;
+            legendEl.appendChild(item);
+        });
 
-        globe.controls().enableZoom = true; // 启用缩放
-        globe.controls().minZoom = 1; // 设置最小缩放
-        globe.controls().maxZoom = 5; // 设置最大缩放
+        // Set counts
+        const totalCountries = new Set(cities.map(c => c.country)).size;
+        document.getElementById("city-count").textContent = cities.length;
+        document.getElementById("country-count").textContent = totalCountries;
 
+        // Map with Stamen Watercolor tiles
+        const map = L.map("map", {
+            center: [30, 90],
+            zoom: 3,
+            minZoom: 2,
+            maxZoom: 12,
+            zoomControl: true,
+            attributionControl: true,
+            worldCopyJump: true,
+        });
 
+        L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+            subdomains: "abcd",
+            maxZoom: 19,
+        }).addTo(map);
 
+        // Add markers (with copies at lon ± 360 for seamless wrapping)
+        function addCityMarker(city, lonOffset) {
+            const color = areaColors[city.area];
+            const marker = L.circleMarker([city.lat, city.lon + lonOffset], {
+                radius: 7,
+                fillColor: color,
+                fillOpacity: 0.9,
+                color: "#fff",
+                weight: 2,
+            }).addTo(map);
+
+            marker.bindPopup(
+                `<div style="font-size:14px;font-weight:500;">${city.name}</div>` +
+                `<div class="popup-region" style="color:${color}">${city.country}</div>`,
+                { closeButton: false, offset: [0, -4] }
+            );
+
+            marker.on("mouseover", function() { this.openPopup(); });
+            marker.on("mouseout", function() { this.closePopup(); });
+        }
+
+        cities.forEach(city => {
+            addCityMarker(city, 0);
+            addCityMarker(city, -360);
+            addCityMarker(city, 360);
+        });
     </script>
 </body>
 </html>
