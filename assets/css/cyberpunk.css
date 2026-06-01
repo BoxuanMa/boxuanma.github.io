@@ -1,0 +1,527 @@
+/* ============================================================
+   cyberpunk.css — LIGHT monochrome cyberpunk / HUD theme
+   White base + black ink, high contrast for readability.
+   Texture: grain, faint scanlines, technical grid, HUD brackets,
+   cut corners, mono labels. One cobalt-blue accent used sparingly.
+   Images keep their natural colors (no grayscale).
+   Scoped under body.cyber — toggle by adding/removing the class.
+   ============================================================ */
+
+body.cyber {
+	--bg:        #ffffff;   /* base — clean white (no gray top/bottom) */
+	--bg-1:      #ffffff;
+	--bg-2:      #ffffff;
+	--sidebar:   #f5f6f3;
+	--panel:     rgba(255, 255, 255, 0.66);
+	--ink:       #16181d;   /* headings / strong */
+	--ink-soft:  #33363d;   /* body text */
+	--dim:       #696d76;   /* meta / muted */
+	--faint:     #aeb2b9;
+	--line:      rgba(22, 24, 29, 0.15);
+	--line-mid:  rgba(22, 24, 29, 0.30);
+	--line-hot:  rgba(22, 24, 29, 0.55);
+	--accent:    #3266c0;   /* cobalt x steel blend */
+	--accent-rgb: 50,102,192;
+	--lav:       #a8c4ef;   /* light blue (sidebar highlights) */
+	--side-grad: linear-gradient(165deg, #4776c7 0%, #315ca9 28%, #224177 56%, #152645 82%, #0a111e 100%);   /* blended blue */
+	--accent-dim:rgba(var(--accent-rgb), 0.45);
+	--glow:      0 0 0.5em rgba(var(--accent-rgb), 0.30);
+	--red:       #e23052;   /* glitch only */
+
+	background: var(--bg);
+	color: var(--ink-soft);
+	font-family: "Archivo", "Lato", sans-serif;
+	letter-spacing: 0.01em;
+}
+
+/* ---------- Global texture overlays -------------------------- */
+/* grain (dark specks, multiply) */
+body.cyber::before {
+	content: "";
+	position: fixed; inset: 0;
+	z-index: 9998;
+	pointer-events: none;
+	opacity: 0.045;
+	mix-blend-mode: multiply;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	animation: grainShift 0.5s steps(2) infinite;
+}
+/* soft edge vignette only (scanlines removed for a clean white) */
+body.cyber::after {
+	content: "";
+	position: fixed; inset: 0;
+	z-index: 9997;
+	pointer-events: none;
+	background: radial-gradient(125% 100% at 50% 38%, transparent 78%, rgba(20,22,29,0.04) 100%);
+}
+
+@keyframes grainShift {
+	0%   { transform: translate(0,0); }
+	100% { transform: translate(-6px, 4px); }
+}
+
+/* clean white content area (grid removed) */
+body.cyber #wrapper {
+	background: #ffffff;
+}
+
+/* ---------- Typography --------------------------------------- */
+
+body.cyber h1, body.cyber h2, body.cyber h3,
+body.cyber h4, body.cyber h5, body.cyber h6 {
+	font-family: "Chakra Petch", sans-serif;
+	color: var(--ink);
+	font-weight: 600;
+	letter-spacing: 0.01em;
+}
+
+body.cyber, body.cyber input, body.cyber select, body.cyber textarea {
+	color: var(--ink-soft);
+}
+body.cyber strong, body.cyber b { color: var(--ink); font-weight: 700; }
+
+body.cyber #logo, body.cyber #logo a {
+	font-family: "Chakra Petch", sans-serif;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+body.cyber ::selection { background: var(--accent); color: #fff; }
+
+/* ---------- Links -------------------------------------------- */
+
+body.cyber #main a {
+	color: var(--ink);
+	transition: color .2s ease, text-shadow .2s ease;
+}
+body.cyber #main a:hover {
+	color: var(--accent) !important;
+	text-shadow: var(--glow);
+}
+body.cyber #main .text-content a:not(.image):not(.tag) {
+	border-bottom: 1px solid var(--line-mid);
+}
+body.cyber #main .text-content a:not(.image):not(.tag):hover {
+	border-bottom-color: var(--accent);
+}
+
+/* ---------- Sidebar (#header) -------------------------------- */
+
+/* signature gradient sidebar — blue → blue-black (white text stays legible) */
+body.cyber #header {
+	background:
+		repeating-linear-gradient(0deg, rgba(255,255,255,0) 0, rgba(255,255,255,0) 2px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0) 4px),
+		var(--side-grad);
+	color: rgba(255,255,255,0.82);
+	border-left: 1px solid rgba(255,255,255,0.12);
+	box-shadow: -1px 0 0 rgba(168,196,239,0.25), -24px 0 50px rgba(20,22,29,0.10);
+}
+/* HUD corner brackets on the sidebar header */
+body.cyber #header > header { position: relative; }
+body.cyber #header > header::before,
+body.cyber #header > header::after {
+	content: "";
+	position: absolute;
+	width: 18px; height: 18px;
+	border: 1px solid rgba(255,255,255,0.45);
+}
+body.cyber #header > header::before { top: 18px; left: 18px; border-right: 0; border-bottom: 0; }
+body.cyber #header > header::after  { top: 18px; right: 18px; border-left: 0; border-bottom: 0; }
+
+body.cyber #header h1,
+body.cyber #header h1 a { color: #ffffff; }
+
+body.cyber #header > header h1 {
+	font-size: 1.6em;
+	letter-spacing: 0.14em;
+	text-shadow: 0 0 22px rgba(168,196,239,0.5);
+}
+body.cyber #header header p {
+	color: rgba(255,255,255,0.82);
+	font-family: "Space Mono", monospace;
+	font-style: normal;
+	font-weight: 700;
+	font-size: 0.7em;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+
+/* Avatar: keep natural color, HUD cut-corner frame */
+body.cyber #header > header .avatar {
+	border-radius: 0;
+	clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+	box-shadow: 0 0 0 1px rgba(255,255,255,0.45), 0 6px 22px rgba(20,10,50,0.35);
+	filter: none;
+	transition: transform .4s ease, box-shadow .4s ease;
+}
+body.cyber #header > header .avatar img { border-radius: 0; }
+body.cyber #header > header .avatar:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 0 0 1px var(--lav), 0 10px 26px rgba(168,196,239,0.35);
+}
+
+/* Nav: terminal rows with > marker */
+body.cyber #header > nav ul li a {
+	font-family: "Space Mono", monospace;
+	font-size: 0.78em;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: rgba(255,255,255,0.78) !important;
+	border-radius: 0;
+	border-left: 1px solid transparent;
+	padding-left: 1.4em;
+	position: relative;
+}
+body.cyber #header > nav ul li a::before {
+	content: ">";
+	position: absolute;
+	left: 0.55em;
+	color: rgba(255,255,255,0.35);
+	transition: color .2s ease, transform .2s ease;
+}
+body.cyber #header > nav ul li a:hover {
+	background: linear-gradient(90deg, rgba(255,255,255,0.12), transparent);
+	color: #ffffff !important;
+	border-left-color: var(--lav);
+}
+body.cyber #header > nav ul li a:hover::before {
+	color: var(--lav);
+	transform: translateX(3px);
+}
+body.cyber #header > nav ul li a.active {
+	background: linear-gradient(90deg, rgba(255,255,255,0.16), transparent);
+	color: #ffffff !important;
+	border-left-color: var(--lav);
+	box-shadow: none;
+}
+body.cyber #header > nav ul li a.active::before { color: var(--lav); }
+
+/* Social icons */
+body.cyber #header > footer { border-top: 1px solid rgba(255,255,255,0.12); }
+body.cyber #header > footer .icons li a { color: rgba(255,255,255,0.6); }
+body.cyber #header > footer .icons li a:hover {
+	color: #ffffff !important;
+	text-shadow: 0 0 0.6em rgba(168,196,239,0.6);
+}
+
+/* ---------- Language switcher (HUD chip) --------------------- */
+
+body.cyber .lang-switcher {
+	background: var(--bg-2);
+	backdrop-filter: blur(8px);
+	border: 1px solid var(--line-mid);
+	border-radius: 0;
+	box-shadow: 0 2px 10px rgba(20,22,29,0.08);
+	clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
+}
+body.cyber .lang-switcher button {
+	font-family: "Space Mono", monospace;
+	color: var(--dim);
+	border-radius: 0;
+	letter-spacing: 0.08em;
+}
+body.cyber .lang-switcher button:hover { color: var(--accent); }
+body.cyber .lang-switcher button.active {
+	background: var(--accent);
+	color: #fff;
+	box-shadow: 0 0 14px rgba(var(--accent-rgb),0.3);
+}
+
+/* ---------- Section headings (mono kicker + bracket) --------- */
+
+body.cyber #main > section > .container > h3 {
+	position: relative;
+	font-family: "Chakra Petch", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	font-size: 1.7em;
+	padding: 0 0 0.5em 0;
+	margin-bottom: 1em;
+	color: var(--ink);
+}
+body.cyber #main > section > .container > h3::before {
+	content: "// ";
+	color: var(--accent);
+	font-family: "Space Mono", monospace;
+	font-size: 0.6em;
+	letter-spacing: 0;
+	vertical-align: middle;
+}
+body.cyber #main > section > .container > h3::after {
+	content: "";
+	position: absolute;
+	left: 0; bottom: 0;
+	width: 100%; height: 1px;
+	background: linear-gradient(90deg, var(--accent), var(--line-mid) 30%, transparent);
+}
+
+/* ---------- Hero name (glitch) ------------------------------- */
+
+body.cyber .content-image-wrapper .text-content header.major h3 {
+	font-family: "Chakra Petch", sans-serif;
+	font-weight: 700;
+	font-size: 2.9em;
+	line-height: 1.02;
+	letter-spacing: 0.02em;
+	color: var(--ink);
+	text-transform: uppercase;
+	position: relative;
+	text-shadow: 0.5px 0 var(--accent-dim), -0.5px 0 rgba(226,48,85,0.35);
+	transition: text-shadow .15s steps(2);
+}
+body.cyber .content-image-wrapper .text-content header.major h3:hover {
+	animation: glitch 0.4s steps(2) 2;
+}
+@keyframes glitch {
+	0%   { text-shadow: 2px 0 var(--accent), -2px 0 var(--red); transform: translate(0); }
+	25%  { text-shadow: -2px 0 var(--accent), 2px 0 var(--red); transform: translate(1px,-1px); }
+	50%  { text-shadow: 2px 0 var(--red), -2px 0 var(--accent); transform: translate(-1px,1px); }
+	75%  { text-shadow: -2px 0 var(--red), 2px 0 var(--accent); transform: translate(1px,0); }
+	100% { text-shadow: 0.5px 0 var(--accent-dim), -0.5px 0 rgba(226,48,85,0.35); transform: translate(0); }
+}
+
+body.cyber .content-image-wrapper .text-content > .lang-en,
+body.cyber .content-image-wrapper .text-content > .lang-ja,
+body.cyber .content-image-wrapper .text-content > .lang-cn {
+	color: var(--dim);
+}
+body.cyber .text-content a.bi-bar-chart-line {
+	font-family: "Space Mono", monospace;
+	font-size: 0.82em;
+	letter-spacing: 0.04em;
+	color: var(--dim);
+}
+body.cyber .text-content a.bi-bar-chart-line:hover { color: var(--accent); }
+
+/* ---------- Photo gallery (keep color, HUD frame) ------------ */
+
+body.cyber .photo-gallery .photo-item {
+	border-radius: 0;
+	border: 1px solid var(--line-mid);
+	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+	box-shadow: 0 2px 10px rgba(20,22,29,0.10);
+	transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease;
+}
+body.cyber .photo-gallery .photo-item img {
+	filter: none;
+	transition: transform .5s ease;
+}
+body.cyber .photo-gallery .photo-item:hover {
+	transform: translateY(-5px);
+	border-color: var(--accent-dim);
+	box-shadow: 0 10px 28px rgba(20,22,29,0.18), 0 0 16px rgba(var(--accent-rgb),0.12);
+}
+body.cyber .photo-gallery .photo-item:hover img { transform: scale(1.05); }
+body.cyber .photo-gallery .photo-item .photo-caption {
+	font-family: "Space Mono", monospace;
+	font-size: 0.68em;
+	letter-spacing: 0.1em;
+	background: linear-gradient(transparent, rgba(0,0,0,0.78));
+	color: #fff;
+}
+
+/* ---------- Research-topics image (keep color) -------------- */
+
+/* topic images live inside the <ol>, not directly under <article> */
+body.cyber .features article ol > a.image > img {
+	border: 1px solid var(--line-mid) !important;
+	border-radius: 0 !important;
+	filter: none;
+	box-shadow: 0 2px 10px rgba(20,22,29,0.08);
+	transition: transform .4s ease, box-shadow .4s ease;
+}
+body.cyber .features article ol > a.image:hover > img {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 26px rgba(20,22,29,0.16), 0 0 16px rgba(var(--accent-rgb),0.12);
+}
+
+/* numbered markers → HUD squares */
+body.cyber ol > li:before {
+	border-radius: 0;
+	color: var(--accent);
+	border: 1px solid var(--accent-dim);
+	background: rgba(var(--accent-rgb),0.05);
+	font-family: "Chakra Petch", sans-serif;
+	font-weight: 600;
+	clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+	transition: background .25s ease, color .25s ease, box-shadow .25s ease;
+}
+body.cyber ol > li:hover:before {
+	background: var(--accent) !important;
+	color: #fff !important;
+	border-color: var(--accent) !important;
+	box-shadow: 0 0 16px rgba(var(--accent-rgb),0.35);
+}
+body.cyber .features article h4 {
+	font-family: "Chakra Petch", sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	font-size: 1.3em;
+	color: var(--ink);
+}
+body.cyber .features article { border-top: 1px solid var(--line); }
+body.cyber .features article .inner .text-content,
+body.cyber .text-content { color: var(--ink-soft); }
+
+/* ---------- Paper cards -------------------------------------- */
+
+body.cyber .image-text-container {
+	background: var(--panel);
+	border: 1px solid var(--line);
+	border-radius: 0;
+	clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+	transition: border-color .3s ease, background .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+body.cyber .paper-list .image-text-container:hover {
+	border-color: var(--accent-dim);
+	background: rgba(var(--accent-rgb),0.05);
+	transform: translateX(4px);
+	box-shadow: -2px 0 0 var(--accent), 0 6px 20px rgba(20,22,29,0.10);
+}
+body.cyber .image-text-container .image img,
+body.cyber .image-text-container img {
+	border-radius: 0 !important;
+	filter: none;
+	box-shadow: 0 0 0 1px var(--line);
+}
+
+/* ---------- Collapsible toggle (terminal button) ------------- */
+
+body.cyber .paper-toggle {
+	font-family: "Space Mono", monospace;
+	text-transform: uppercase;
+	font-size: 0.72em;
+	letter-spacing: 0.12em;
+	color: var(--accent);
+	background: rgba(var(--accent-rgb),0.05);
+	border: 1px solid var(--accent-dim);
+	border-radius: 0;
+	clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+	transition: background .25s ease, box-shadow .25s ease, transform .15s ease;
+}
+body.cyber .paper-toggle:hover {
+	background: rgba(var(--accent-rgb),0.12);
+	box-shadow: 0 0 14px rgba(var(--accent-rgb),0.2);
+}
+body.cyber .paper-toggle:active { transform: translateY(1px); }
+body.cyber .paper-toggle .arrow { color: var(--accent); }
+
+/* "more publications" link */
+body.cyber #main .container > a[href="Publication.html"] {
+	display: inline-block;
+	font-family: "Space Mono", monospace;
+	text-transform: uppercase;
+	font-size: 0.78em;
+	letter-spacing: 0.12em;
+	color: var(--accent) !important;
+	padding: 0.6em 1.3em;
+	border: 1px solid var(--accent-dim);
+	background: rgba(var(--accent-rgb),0.05);
+	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+	transition: background .25s ease, box-shadow .25s ease, transform .2s ease;
+}
+body.cyber #main .container > a[href="Publication.html"]::before {
+	content: "[ "; color: var(--dim);
+}
+body.cyber #main .container > a[href="Publication.html"]::after {
+	content: " ]"; color: var(--dim);
+}
+body.cyber #main .container > a[href="Publication.html"]:hover {
+	background: rgba(var(--accent-rgb),0.13);
+	box-shadow: 0 0 18px rgba(var(--accent-rgb),0.25);
+	transform: translateY(-2px);
+}
+
+/* ---------- Publication tags (theme-blue + honor accents) --- */
+/* Default label = theme steel-blue (IF / index / JCR / core / poster /
+   open-access). link & code = neutral gray. award = red, invited = gold. */
+body.cyber .tag {
+	font-family: "Space Mono", monospace;
+	font-weight: 700;
+	border-radius: 0;
+	letter-spacing: 0.03em;
+	background: rgba(var(--accent-rgb),0.09) !important;
+	color: #2a5499 !important;
+	border: 1px solid rgba(var(--accent-rgb),0.30);
+	transition: transform .15s ease, box-shadow .2s ease;
+}
+body.cyber .tag:hover { transform: translateY(-1px); }
+
+/* honor badges */
+body.cyber .tag.award   { background:#fbe7df !important; color:#c1432a !important; border-color:rgba(193,67,42,0.34); }
+body.cyber .tag.invited { background:#f7eed1 !important; color:#8a6012 !important; border-color:rgba(138,96,18,0.34); }
+
+/* action links: neutral gray, theme accent on hover */
+body.cyber .tag.link, body.cyber .tag.code {
+	background: rgba(22,24,29,0.05) !important;
+	color: #5a626d !important;
+	border-color: rgba(22,24,29,0.18);
+}
+body.cyber .tag.link:hover, body.cyber .tag.code:hover {
+	background: rgba(var(--accent-rgb),0.12) !important;
+	color: var(--accent) !important;
+	border-color: var(--accent-dim);
+}
+
+/* ---------- Visitor map block (if present) ------------------- */
+
+body.cyber .visitor-map-block {
+	background: var(--panel);
+	border: 1px solid var(--line);
+	border-radius: 0;
+	clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+body.cyber .visitor-map-title { color: var(--ink); font-family: "Chakra Petch", sans-serif; text-transform: uppercase; }
+body.cyber .visitor-map-fallback { color: var(--dim); font-family: "Space Mono", monospace; }
+
+/* ---------- Footer ------------------------------------------- */
+
+body.cyber #footer {
+	background: var(--bg-1);
+	border-top: 1px solid var(--line-mid);
+	color: var(--dim);
+}
+body.cyber #footer .copyright li {
+	font-family: "Space Mono", monospace;
+	font-size: 0.62em;
+	letter-spacing: 0.1em;
+	border-left-color: var(--line);
+}
+
+/* ---------- Scrollbar ---------------------------------------- */
+
+body.cyber ::-webkit-scrollbar { width: 10px; height: 10px; }
+body.cyber ::-webkit-scrollbar-track { background: #e2e4e0; }
+body.cyber ::-webkit-scrollbar-thumb {
+	background: #c2c5bf;
+	border: 1px solid var(--line);
+}
+body.cyber ::-webkit-scrollbar-thumb:hover { background: #a9ada6; }
+
+/* ---------- Entrance reveal (JS-gated) ----------------------- */
+
+html.js body.cyber .reveal { opacity: 0; transform: translateY(12px); }
+html.js body.cyber.loaded .reveal {
+	animation: cyberIn .55s cubic-bezier(.2,.7,.2,1) forwards;
+	animation-delay: var(--reveal-delay, 0s);
+}
+@keyframes cyberIn {
+	0%   { opacity: 0; transform: translateY(12px); clip-path: inset(0 100% 0 0); }
+	60%  { opacity: 1; clip-path: inset(0 0 0 0); }
+	100% { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+}
+
+/* ---------- Reduced motion + mobile -------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+	body.cyber::before { animation: none; }
+	html.js body.cyber .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+	body.cyber * { animation-duration: .001ms !important; }
+}
+
+@media screen and (max-width: 736px) {
+	body.cyber .content-image-wrapper .text-content header.major h3 { font-size: 2.1em; }
+	body.cyber #main > section > .container > h3 { font-size: 1.4em; }
+}

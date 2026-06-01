@@ -4,11 +4,16 @@
 	<title>Boxuan Ma</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<script>document.documentElement.classList.add('js');</script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/cyberpunk.css" />
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png" />
 </head>
-<body class="is-preload">
+<body class="is-preload cyber">
 
 	<!-- Language Switcher -->
 	<div class="lang-switcher">
@@ -54,7 +59,7 @@
 				<div class="container">
 
 					<!-- Intro -->
-					<div class="content-image-wrapper">
+					<div class="content-image-wrapper reveal">
 						<div class="text-content">
 							<header class="major">
 								<h3><span class="lang-en">Boxuan Ma</span><span class="lang-ja">馬 博軒</span><span class="lang-cn">马博轩</span></h3>
@@ -103,8 +108,8 @@
 					<br>
 
 					<!-- Research Topics -->
-					<h3><span class="lang-en">Research Topics</span><span class="lang-ja">研究テーマ</span><span class="lang-cn">研究方向</span></h3>
-					<a class="image"><img src="images/pro.png" alt="" style="width: 100%;"></a>
+					<h3 class="reveal" style="--reveal-delay:.1s"><span class="lang-en">Research Topics</span><span class="lang-ja">研究テーマ</span><span class="lang-cn">研究方向</span></h3>
+					<a class="image reveal" style="--reveal-delay:.16s"><img src="images/pro.png" alt="" style="width: 100%;"></a>
 					<br><br>
 
 					<div class="features">
@@ -283,7 +288,7 @@
 					<br><br><br><br>
 					<a style="color: #c8c3f0"><span class="lang-en">Visitor Map</span><span class="lang-ja">訪問者マップ</span><span class="lang-cn">访客地图</span></a>
 					<br>
-					<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=c8c3f0&w=761&t=tt&d=CkmZfeW0jyaeWp3UnEnx1X_AO7xVAu0iqZIGx_smGPs&co=fefefe&cmo=132eb2&cmn=a5265d&ct=421d1d'></script>
+					<script type='text/javascript' id='clustrmaps' async src='//cdn.clustrmaps.com/map_v2.js?cl=c8c3f0&w=761&t=tt&d=CkmZfeW0jyaeWp3UnEnx1X_AO7xVAu0iqZIGx_smGPs&co=fefefe&cmo=132eb2&cmn=a5265d&ct=421d1d'></script>
 
 				</div>
 			</section>
@@ -342,6 +347,23 @@
 				}
 			});
 		}
+	})();
+
+	// Trigger entrance animations as soon as the DOM is ready.
+	// (Not window.load — a slow/hanging external widget must never delay reveals.)
+	(function() {
+		function reveal() {
+			document.body.classList.add('loaded');
+			// Lift HTML5UP's `body.is-preload *{animation:none}` now, instead of
+			// waiting for window.load (which a dead external widget can stall).
+			document.body.classList.remove('is-preload');
+		}
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', reveal);
+		} else {
+			reveal();
+		}
+		setTimeout(reveal, 1200); // safety fallback
 	})();
 	</script>
 
