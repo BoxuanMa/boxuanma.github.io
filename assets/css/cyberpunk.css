@@ -452,9 +452,9 @@ body.cyber .tag {
 }
 body.cyber .tag:hover { transform: translateY(-1px); }
 
-/* honor badges */
-body.cyber .tag.award   { background:#fbe7df !important; color:#c1432a !important; border-color:rgba(193,67,42,0.34); }
-body.cyber .tag.invited { background:#f7eed1 !important; color:#8a6012 !important; border-color:rgba(138,96,18,0.34); }
+/* honor badges — award & invited share one red */
+body.cyber .tag.award,
+body.cyber .tag.invited { background:#fbe7df !important; color:#c1432a !important; border-color:rgba(193,67,42,0.34); }
 
 /* action links: neutral gray, theme accent on hover */
 body.cyber .tag.link, body.cyber .tag.code {
