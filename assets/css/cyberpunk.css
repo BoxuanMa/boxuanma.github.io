@@ -99,10 +99,11 @@ body.cyber #main a:hover {
 	color: var(--accent) !important;
 	text-shadow: var(--glow);
 }
-body.cyber #main .text-content a:not(.image):not(.tag) {
+/* underline only genuine prose links — not icon links (.bi / .icon) */
+body.cyber #main .text-content a:not(.image):not(.tag):not(.bi):not(.icon) {
 	border-bottom: 1px solid var(--line-mid);
 }
-body.cyber #main .text-content a:not(.image):not(.tag):hover {
+body.cyber #main .text-content a:not(.image):not(.tag):not(.bi):not(.icon):hover {
 	border-bottom-color: var(--accent);
 }
 
