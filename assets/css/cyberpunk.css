@@ -327,14 +327,23 @@ body.cyber .photo-gallery .photo-item .photo-caption {
 
 /* topic images live inside the <ol>, not directly under <article> */
 body.cyber .features article ol > a.image {
-	display: inline-block;
+	float: left;
+	width: auto !important;
+	padding: 2px !important;
+	margin: 0 2em 0.6em 0;
 	background: var(--accent);
-	padding: 2px;
 	border-radius: 0;
 	clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
 	box-shadow: 0 2px 10px rgba(20,22,29,0.10);
 	transition: transform .4s ease, box-shadow .4s ease;
 }
+/* media-object: text fills remaining space beside the floated image */
+body.cyber .features article ol > .inner {
+	display: block;
+	width: auto !important;
+	overflow: hidden;
+}
+body.cyber .features article ol > .paper-toggle { clear: both; }
 body.cyber .features article ol > a.image > img {
 	display: block;
 	border: 0 !important;
