@@ -323,19 +323,29 @@ body.cyber .photo-gallery .photo-item .photo-caption {
 	color: #fff;
 }
 
-/* ---------- Research-topics image (keep color) -------------- */
+/* ---------- Research-topics image — blue cut-corner HUD frame -------------- */
 
 /* topic images live inside the <ol>, not directly under <article> */
-body.cyber .features article ol > a.image > img {
-	border: 1px solid var(--line-mid) !important;
-	border-radius: 0 !important;
-	filter: none;
-	box-shadow: 0 2px 10px rgba(20,22,29,0.08);
+body.cyber .features article ol > a.image {
+	display: inline-block;
+	background: var(--accent);
+	padding: 2px;
+	border-radius: 0;
+	clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
+	box-shadow: 0 2px 10px rgba(20,22,29,0.10);
 	transition: transform .4s ease, box-shadow .4s ease;
 }
-body.cyber .features article ol > a.image:hover > img {
+body.cyber .features article ol > a.image > img {
+	display: block;
+	border: 0 !important;
+	border-radius: 0 !important;
+	filter: none;
+	box-shadow: none;
+	clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 11px 100%, 0 calc(100% - 11px));
+}
+body.cyber .features article ol > a.image:hover {
 	transform: translateY(-3px);
-	box-shadow: 0 10px 26px rgba(20,22,29,0.16), 0 0 16px rgba(var(--accent-rgb),0.12);
+	box-shadow: 0 10px 26px rgba(20,22,29,0.16), 0 0 18px rgba(var(--accent-rgb),0.28);
 }
 
 /* numbered markers → HUD squares */
