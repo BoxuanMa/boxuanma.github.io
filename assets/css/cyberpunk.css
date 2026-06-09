@@ -329,7 +329,7 @@ body.cyber .photo-gallery .photo-item .photo-caption {
    Thin border + clip-path → the diagonal cut is borderless (clean notch),
    same treatment as .photo-item / .image-text-container. */
 body.cyber .features article ol > a.image > img {
-	border: 1px solid var(--line-mid) !important;
+	border: 1px solid var(--accent) !important;
 	border-radius: 0 !important;
 	filter: none;
 	box-shadow: 0 2px 10px rgba(20,22,29,0.08);
@@ -338,8 +338,8 @@ body.cyber .features article ol > a.image > img {
 }
 body.cyber .features article ol > a.image:hover > img {
 	transform: translateY(-3px);
-	border-color: var(--accent-dim);
-	box-shadow: 0 10px 26px rgba(20,22,29,0.16), 0 0 16px rgba(var(--accent-rgb),0.14);
+	border-color: var(--accent);
+	box-shadow: 0 10px 26px rgba(20,22,29,0.16), 0 0 16px rgba(var(--accent-rgb),0.22);
 }
 
 /* numbered markers → HUD squares */
