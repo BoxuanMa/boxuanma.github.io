@@ -9,24 +9,29 @@
 
 body.cyber {
 	--bg:        #ffffff;   /* base — clean white (no gray top/bottom) */
-	--bg-1:      #ffffff;
+	--bg-1:      #f8fafc;
 	--bg-2:      #ffffff;
-	--sidebar:   #f5f6f3;
+	--sidebar:   #f5f7fa;
 	--panel:     rgba(255, 255, 255, 0.66);
-	--ink:       #16181d;   /* headings / strong */
-	--ink-soft:  #33363d;   /* body text */
-	--dim:       #696d76;   /* meta / muted */
-	--faint:     #aeb2b9;
-	--line:      rgba(22, 24, 29, 0.15);
-	--line-mid:  rgba(22, 24, 29, 0.30);
-	--line-hot:  rgba(22, 24, 29, 0.55);
-	--accent:    #3266c0;   /* cobalt x steel blend */
-	--accent-rgb: 50,102,192;
+	--ink:       #11213d;   /* navy ink — headings / strong */
+	--ink-soft:  #2c3340;   /* body text (navy-tinted charcoal) */
+	--dim:       #727a86;   /* meta / muted */
+	--faint:     #aeb6c2;
+	--line:      rgba(17, 33, 61, 0.13);
+	--line-mid:  rgba(17, 33, 61, 0.28);
+	--line-hot:  rgba(17, 33, 61, 0.52);
+	--accent:    #235787;   /* steel navy blue (structural accent) */
+	--accent-rgb: 35,87,135;
+	--accent-deep: #1c4475; /* deeper navy */
 	--lav:       #a8c4ef;   /* light blue (sidebar highlights) */
-	--side-grad: linear-gradient(165deg, #4776c7 0%, #315ca9 28%, #224177 56%, #152645 82%, #0a111e 100%);   /* blended blue */
+	--side-grad: linear-gradient(165deg, #235787 0%, #1c4475 30%, #11213d 66%, #0a1426 100%);   /* navy blend */
 	--accent-dim:rgba(var(--accent-rgb), 0.45);
 	--glow:      0 0 0.5em rgba(var(--accent-rgb), 0.30);
-	--red:       #e23052;   /* glitch only */
+	--red:       #c80f2e;   /* crimson — second accent */
+	--red-deep:  #a60b26;   /* darker crimson (hover) */
+	--red-rgb:   200,15,46;
+	--red-dim:   rgba(200,15,46,0.42);
+	--red-soft:  #fdecef;   /* crimson tint background */
 
 	background: var(--bg);
 	color: var(--ink-soft);
@@ -109,57 +114,63 @@ body.cyber #main .text-content a:not(.image):not(.tag):not(.bi):not(.icon):hover
 
 /* ---------- Sidebar (#header) -------------------------------- */
 
-/* signature gradient sidebar — blue → blue-black (white text stays legible) */
+/* clean white sidebar — red↔blue gradient edge + blue/red accents */
 body.cyber #header {
-	background:
-		repeating-linear-gradient(0deg, rgba(255,255,255,0) 0, rgba(255,255,255,0) 2px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0) 4px),
-		var(--side-grad);
-	color: rgba(255,255,255,0.82);
-	border-left: 1px solid rgba(255,255,255,0.12);
-	box-shadow: -1px 0 0 rgba(168,196,239,0.25), -24px 0 50px rgba(20,22,29,0.10);
+	background: #ffffff;
+	color: var(--ink-soft);
+	/* inner-edge decorative line — solid blue */
+	border-left: 3px solid var(--accent);
+	box-shadow: -24px 0 50px rgba(17,33,61,0.04);
 }
-/* HUD corner brackets on the sidebar header */
+/* HUD corner brackets on the sidebar header — both blue */
 body.cyber #header > header { position: relative; }
 body.cyber #header > header::before,
 body.cyber #header > header::after {
 	content: "";
 	position: absolute;
 	width: 18px; height: 18px;
-	border: 1px solid rgba(255,255,255,0.45);
 }
-body.cyber #header > header::before { top: 18px; left: 18px; border-right: 0; border-bottom: 0; }
-body.cyber #header > header::after  { top: 18px; right: 18px; border-left: 0; border-bottom: 0; }
+body.cyber #header > header::before { top: 18px; left: 18px; border-top: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+body.cyber #header > header::after  { top: 18px; right: 18px; border-top: 1px solid var(--accent); border-right: 1px solid var(--accent); }
 
 body.cyber #header h1,
-body.cyber #header h1 a { color: #ffffff; }
+body.cyber #header h1 a { color: var(--ink); }
 
 body.cyber #header > header h1 {
 	font-size: 1.6em;
 	letter-spacing: 0.14em;
-	text-shadow: 0 0 22px rgba(168,196,239,0.5);
 }
 body.cyber #header header p {
-	color: rgba(255,255,255,0.82);
+	color: var(--dim);
 	font-family: "Space Mono", monospace;
 	font-style: normal;
 	font-weight: 700;
 	font-size: 0.7em;
 	letter-spacing: 0.18em;
 	text-transform: uppercase;
+	position: relative;
+	padding-bottom: 1.1em;
+}
+/* short blue bar under the name block */
+body.cyber #header header p::after {
+	content: "";
+	position: absolute;
+	left: 50%; bottom: 0;
+	transform: translateX(-50%);
+	width: 48px; height: 2px;
+	background: var(--accent);
 }
 
-/* Avatar: keep natural color, HUD cut-corner frame */
+/* Avatar: natural color, white frame (no colored edge line over transparent margins) */
 body.cyber #header > header .avatar {
 	border-radius: 0;
-	clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
-	box-shadow: 0 0 0 1px rgba(255,255,255,0.45), 0 6px 22px rgba(20,10,50,0.35);
+	box-shadow: 0 0 0 1px #ffffff;
 	filter: none;
-	transition: transform .4s ease, box-shadow .4s ease;
+	transition: transform .4s ease;
 }
 body.cyber #header > header .avatar img { border-radius: 0; }
 body.cyber #header > header .avatar:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 0 0 1px var(--lav), 0 10px 26px rgba(168,196,239,0.35);
 }
 
 /* Nav: terminal rows — > marker pinned left, label centered */
@@ -169,7 +180,7 @@ body.cyber #header > nav ul li a {
 	font-weight: 700;
 	letter-spacing: 0.16em;
 	text-transform: uppercase;
-	color: rgba(255,255,255,0.78) !important;
+	color: var(--red) !important;
 	border-radius: 0;
 	border-left: 1px solid transparent;
 	text-align: center;
@@ -179,33 +190,31 @@ body.cyber #header > nav ul li a::before {
 	content: ">";
 	position: absolute;
 	left: 2.2em;
-	color: rgba(255,255,255,0.35);
+	color: var(--accent-dim);
 	transition: color .2s ease, transform .2s ease;
 }
 body.cyber #header > nav ul li a:hover {
-	background: linear-gradient(90deg, rgba(255,255,255,0.12), transparent);
-	color: #ffffff !important;
-	border-left-color: var(--lav);
+	background: linear-gradient(90deg, rgba(var(--red-rgb),0.08), transparent);
+	color: var(--red-deep) !important;
+	border-left-color: var(--accent);
 }
 body.cyber #header > nav ul li a:hover::before {
-	color: var(--lav);
+	color: var(--accent);
 	transform: translateX(3px);
 }
 body.cyber #header > nav ul li a.active {
-	background: linear-gradient(90deg, rgba(255,255,255,0.16), transparent);
-	color: #ffffff !important;
-	border-left-color: var(--lav);
+	background: linear-gradient(90deg, rgba(var(--red-rgb),0.10), transparent);
+	color: var(--red-deep) !important;
+	border-left-color: var(--accent);
 	box-shadow: none;
 }
-body.cyber #header > nav ul li a.active::before { color: var(--lav); }
+body.cyber #header > nav ul li a.active::before { color: var(--accent); }
 
-/* Social icons */
-body.cyber #header > footer { border-top: 1px solid rgba(255,255,255,0.12); }
-body.cyber #header > footer .icons li a { color: rgba(255,255,255,0.6); }
-body.cyber #header > footer .icons li a:hover {
-	color: #ffffff !important;
-	text-shadow: 0 0 0.6em rgba(168,196,239,0.6);
-}
+/* Social icons — alternating blue / red on hover */
+body.cyber #header > footer { border-top: 1px solid var(--line); }
+body.cyber #header > footer .icons li a { color: var(--dim); transition: color .2s ease, transform .2s ease; }
+body.cyber #header > footer .icons li:nth-child(odd) a:hover { color: var(--accent) !important; transform: translateY(-2px); }
+body.cyber #header > footer .icons li:nth-child(even) a:hover { color: var(--red) !important; transform: translateY(-2px); }
 
 /* ---------- Language switcher (HUD chip) --------------------- */
 
@@ -244,7 +253,7 @@ body.cyber #main > section > .container > h3 {
 }
 body.cyber #main > section > .container > h3::before {
 	content: "// ";
-	color: var(--accent);
+	color: var(--red);
 	font-family: "Space Mono", monospace;
 	font-size: 0.6em;
 	letter-spacing: 0;
@@ -269,7 +278,7 @@ body.cyber .content-image-wrapper .text-content header.major h3 {
 	color: var(--ink);
 	text-transform: uppercase;
 	position: relative;
-	text-shadow: 0.5px 0 var(--accent-dim), -0.5px 0 rgba(226,48,85,0.35);
+	text-shadow: 0.5px 0 var(--accent-dim), -0.5px 0 rgba(200,15,46,0.4);
 	transition: text-shadow .15s steps(2);
 }
 body.cyber .content-image-wrapper .text-content header.major h3:hover {
@@ -280,7 +289,7 @@ body.cyber .content-image-wrapper .text-content header.major h3:hover {
 	25%  { text-shadow: -2px 0 var(--accent), 2px 0 var(--red); transform: translate(1px,-1px); }
 	50%  { text-shadow: 2px 0 var(--red), -2px 0 var(--accent); transform: translate(-1px,1px); }
 	75%  { text-shadow: -2px 0 var(--red), 2px 0 var(--accent); transform: translate(1px,0); }
-	100% { text-shadow: 0.5px 0 var(--accent-dim), -0.5px 0 rgba(226,48,85,0.35); transform: translate(0); }
+	100% { text-shadow: 0.5px 0 var(--accent-dim), -0.5px 0 rgba(200,15,46,0.4); transform: translate(0); }
 }
 
 body.cyber .content-image-wrapper .text-content > .lang-en,
@@ -342,7 +351,7 @@ body.cyber .features article ol > a.image:hover > img {
 	box-shadow: 0 10px 26px rgba(20,22,29,0.16), 0 0 16px rgba(var(--accent-rgb),0.22);
 }
 
-/* numbered markers → HUD squares */
+/* numbered markers → HUD squares (blue) */
 body.cyber ol > li:before {
 	border-radius: 0;
 	color: var(--accent);
@@ -451,12 +460,12 @@ body.cyber #main .container > a[href="Publication.html"] {
 	text-transform: uppercase;
 	font-size: 0.78em;
 	letter-spacing: 0.12em;
-	color: var(--accent) !important;
+	color: var(--red-deep) !important;
 	padding: 0.6em 1.3em;
-	border: 1px solid var(--accent-dim);
-	background: rgba(var(--accent-rgb),0.05);
+	border: 1px solid var(--red-dim);
+	background: rgba(var(--red-rgb),0.05);
 	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-	transition: background .25s ease, box-shadow .25s ease, transform .2s ease;
+	transition: background .25s ease, box-shadow .25s ease, transform .2s ease, color .25s ease;
 }
 body.cyber #main .container > a[href="Publication.html"]::before {
 	content: "[ "; color: var(--dim);
@@ -465,10 +474,13 @@ body.cyber #main .container > a[href="Publication.html"]::after {
 	content: " ]"; color: var(--dim);
 }
 body.cyber #main .container > a[href="Publication.html"]:hover {
-	background: rgba(var(--accent-rgb),0.13);
-	box-shadow: 0 0 18px rgba(var(--accent-rgb),0.25);
+	background: var(--red);
+	color: #fff !important;
+	box-shadow: 0 0 18px rgba(var(--red-rgb),0.3);
 	transform: translateY(-2px);
 }
+body.cyber #main .container > a[href="Publication.html"]:hover::before,
+body.cyber #main .container > a[href="Publication.html"]:hover::after { color: rgba(255,255,255,0.7); }
 
 /* ---------- Publication tags (theme-blue + honor accents) --- */
 /* Default label = theme steel-blue (IF / index / JCR / core / poster /
@@ -490,7 +502,7 @@ body.cyber .tag:hover { transform: translateY(-1px); }
 
 /* honor badges — award & invited share one red */
 body.cyber .tag.award,
-body.cyber .tag.invited { background:#fbe7df !important; color:#c1432a !important; border-color:rgba(193,67,42,0.34); }
+body.cyber .tag.invited { background:var(--red-soft) !important; color:var(--red-deep) !important; border-color:rgba(var(--red-rgb),0.32); }
 
 /* action links: neutral gray, theme accent on hover */
 body.cyber .tag.link, body.cyber .tag.code {
@@ -518,8 +530,8 @@ body.cyber .visitor-map-fallback { color: var(--dim); font-family: "Space Mono",
 /* ---------- Footer ------------------------------------------- */
 
 body.cyber #footer {
-	background: var(--bg-1);
-	border-top: 1px solid var(--line-mid);
+	background: #ffffff;
+	border-top: 1px solid var(--line);
 	color: var(--dim);
 }
 body.cyber #footer .copyright li {
