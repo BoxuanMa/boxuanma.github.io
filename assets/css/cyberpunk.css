@@ -120,7 +120,6 @@ body.cyber #header {
 	color: var(--ink-soft);
 	/* inner-edge decorative line — solid blue, hairline */
 	border-left: 1px solid var(--accent);
-	box-shadow: -24px 0 50px rgba(17,33,61,0.04);
 }
 /* HUD corner brackets on the sidebar header — both blue */
 body.cyber #header > header { position: relative; }
