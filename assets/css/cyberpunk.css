@@ -118,8 +118,8 @@ body.cyber #main .text-content a:not(.image):not(.tag):not(.bi):not(.icon):hover
 body.cyber #header {
 	background: #ffffff;
 	color: var(--ink-soft);
-	/* inner-edge decorative line — solid blue */
-	border-left: 3px solid var(--accent);
+	/* inner-edge decorative line — solid blue, hairline */
+	border-left: 1px solid var(--accent);
 	box-shadow: -24px 0 50px rgba(17,33,61,0.04);
 }
 /* HUD corner brackets on the sidebar header — both blue */
@@ -211,7 +211,7 @@ body.cyber #header > nav ul li a.active {
 body.cyber #header > nav ul li a.active::before { color: var(--accent); }
 
 /* Social icons — alternating blue / red on hover */
-body.cyber #header > footer { border-top: 1px solid var(--line); }
+body.cyber #header > footer { border-top: 0; }
 body.cyber #header > footer .icons li a { color: var(--dim); transition: color .2s ease, transform .2s ease; }
 body.cyber #header > footer .icons li:nth-child(odd) a:hover { color: var(--accent) !important; transform: translateY(-2px); }
 body.cyber #header > footer .icons li:nth-child(even) a:hover { color: var(--red) !important; transform: translateY(-2px); }
@@ -531,7 +531,7 @@ body.cyber .visitor-map-fallback { color: var(--dim); font-family: "Space Mono",
 
 body.cyber #footer {
 	background: #ffffff;
-	border-top: 1px solid var(--line);
+	border-top: 0;
 	color: var(--dim);
 }
 body.cyber #footer .copyright li {
