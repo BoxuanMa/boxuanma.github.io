@@ -135,6 +135,18 @@ body.cyber #header > header::after  { top: 18px; right: 18px; border-top: 1px so
 body.cyber #header h1,
 body.cyber #header h1 a { color: var(--ink); }
 
+/* main.css turns #header links white on hover (dark-sidebar legacy);
+   sidebar is white here, so keep the ink color and reuse the hero glitch */
+body.cyber #header h1 a {
+	display: inline-block;
+	text-shadow: 0.5px 0 var(--accent-dim), -0.5px 0 rgba(200,15,46,0.4);
+	transition: text-shadow .15s steps(2);
+}
+body.cyber #header h1 a:hover {
+	color: var(--ink) !important;
+	animation: glitch 0.4s steps(2) 2;
+}
+
 body.cyber #header > header h1 {
 	font-size: 1.6em;
 	letter-spacing: 0.14em;
