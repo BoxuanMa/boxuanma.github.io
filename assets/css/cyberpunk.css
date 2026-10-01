@@ -316,6 +316,36 @@ body.cyber .text-content a.bi-bar-chart-line {
 }
 body.cyber .text-content a.bi-bar-chart-line:hover { color: var(--accent); }
 
+/* ---------- Appointments ------------------------------------ */
+
+body.cyber ul.appointments {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 1em 0;
+}
+body.cyber ul.appointments li {
+	display: flex;
+	gap: 1.2em;
+	padding: 0.35em 0 0.35em 1em;
+	margin: 0;
+}
+body.cyber ul.appointments .appt-date {
+	flex: 0 0 11em;
+	white-space: nowrap;
+	font-family: "Space Mono", monospace;
+	font-size: 0.85em;
+	letter-spacing: 0.04em;
+	color: var(--accent);
+	padding-top: 0.15em;
+}
+body.cyber ul.appointments .appt-role { color: var(--ink-soft); }
+body.cyber ul.appointments .appt-role b { color: var(--ink); }
+
+@media screen and (max-width: 736px) {
+	body.cyber ul.appointments li { flex-direction: column; gap: 0.1em; }
+	body.cyber ul.appointments .appt-date { flex-basis: auto; }
+}
+
 /* ---------- Photo gallery (keep color, HUD frame) ------------ */
 
 body.cyber .photo-gallery .photo-item {
