@@ -84,7 +84,6 @@ body.cyber, body.cyber input, body.cyber select, body.cyber textarea {
 	color: var(--ink-soft);
 }
 body.cyber strong, body.cyber b { color: var(--ink); font-weight: 700; }
-body.cyber .role-highlight { color: var(--red); font-weight: 600; }
 
 body.cyber #logo, body.cyber #logo a {
 	font-family: "Chakra Petch", sans-serif;
