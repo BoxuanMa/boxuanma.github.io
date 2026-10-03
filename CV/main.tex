@@ -1,0 +1,676 @@
+%
+%Academic CV LaTeX Template
+% Author: Dubasi Pavan Kumar
+% LinkedIn: https://www.linkedin.com/in/im-pavankumar/
+% License: MIT
+%
+% For errors, suggestions, or improvements, please contact:
+% Email: pavankumard.pg19.ma@nitp.ac.in
+%
+
+
+
+\documentclass[a4paper,11pt]{article}
+
+% Package imports
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{cfr-lm}
+\usepackage[T1]{fontenc}
+\usepackage{fontawesome5}
+\usepackage{CJKutf8}
+
+
+% Color definitions
+\definecolor{darkblue}{RGB}{0,0,139}
+
+% Page layout
+\setlength{\multicolsep}{0pt} 
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.4cm, top=0.8cm, right=1.2cm, bottom=1cm}
+\setlength{\footskip}{5pt} % Addressing fancyhdr warning
+
+% Hyperlink setup (moved after fancyhdr to address warning)
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darkblue,
+    filecolor=darkblue,
+    urlcolor=darkblue,
+}
+
+% Custom box settings
+\usepackage[most]{tcolorbox}
+\tcbset{
+    frame code={},
+    center title,
+    left=0pt,
+    right=0pt,
+    top=0pt,
+    bottom=0pt,
+    colback=gray!20,
+    colframe=white,
+    width=\dimexpr\textwidth\relax,
+    enlarge left by=-2mm,
+    boxsep=4pt,
+    arc=0pt,outer arc=0pt,
+}
+
+% URL style
+\urlstyle{same}
+
+% Text alignment
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item{
+    \textbf{#1}{\hspace{0.5mm}#2 \vspace{-0.5mm}}
+  }
+}
+
+\newcommand{\resumePOR}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1}\hspace{0.3mm}#2 & \textit{\small{#3}} 
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+\newcommand{\resumeSubheading}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#4}} \\
+        \textit{\footnotesize{#3}} &  \footnotesize{#2}\\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#3}} \\
+        \footnotesize{\textit{#2}} & \footnotesize{#4}
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand{\labelitemii}{$\vcenter{\hbox{\tiny$\circ$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=1mm]}
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=*,labelsep=1mm,itemsep=0.5mm]}
+
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\cvsection}[1]{%
+\vspace{2mm}
+\begin{tcolorbox}
+    \textbf{\large #1}
+\end{tcolorbox}
+    \vspace{-4mm}
+}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+\newcolumntype{C}{>{\centering\arraybackslash}X}%
+
+% Commands for icon sizing and positioning
+\newcommand{\socialicon}[1]{\raisebox{-0.05em}{\resizebox{!}{1em}{#1}}}
+\newcommand{\ieeeicon}[1]{\raisebox{-0.3em}{\resizebox{!}{1.3em}{#1}}}
+
+% Font options
+\newcommand{\headerfonti}{\fontfamily{phv}\selectfont} % Helvetica-like (similar to Arial/Calibri)
+\newcommand{\headerfontii}{\fontfamily{ptm}\selectfont} % Times-like (similar to Times New Roman)
+\newcommand{\headerfontiii}{\fontfamily{ppl}\selectfont} % Palatino (elegant serif)
+\newcommand{\headerfontiv}{\fontfamily{pbk}\selectfont} % Bookman (readable serif)
+\newcommand{\headerfontv}{\fontfamily{pag}\selectfont} % Avant Garde-like (similar to Trebuchet MS)
+\newcommand{\headerfontvi}{\fontfamily{cmss}\selectfont} % Computer Modern Sans Serif
+\newcommand{\headerfontvii}{\fontfamily{qhv}\selectfont} % Quasi-Helvetica (another Arial/Calibri alternative)
+\newcommand{\headerfontviii}{\fontfamily{qpl}\selectfont} % Quasi-Palatino (another elegant serif option)
+\newcommand{\headerfontix}{\fontfamily{qtm}\selectfont} % Quasi-Times (another Times New Roman alternative)
+\newcommand{\headerfontx}{\fontfamily{bch}\selectfont} % Charter (clean serif font)
+
+\begin{document}
+\headerfontiii
+
+% Header
+\begin{center}
+    {\Huge\textbf{BOXUAN MA}}
+\end{center}
+\vspace{-4mm}
+
+\begin{center}
+{\large Assistant Professor, Ph.D., Faculty of Arts and Science, Kyushu University }
+\end{center}
+
+\begin{center}
+    \small{
+    Email: \href{mailto:boxuan@artsci.kyushu-u.ac.jp}{boxuan@artsci.kyushu-u.ac.jp} | \href{https://boxuanma.github.io/}{Homepage} |
+    \href{https://scholar.google.com/citations?user=g7B8oj4AAAAJ}{Google Scholar}
+    }
+\end{center}
+
+%\begin{center}
+%    \small{
+%    \socialicon{\faLinkedin} \href{https://www.linkedin.com/in/your-profile/}{Boxuan Ma} | 
+%    \socialicon{\faGithub} \href{https://github.com/your-username}{your-username} | 
+%    \ieeeicon{\includegraphics[height=1.3em]{ieee_collabratec_icon.png}} \href{https://ieee-collabratec.ieee.org/app/p/your-profile}{your-profile} |
+%    \socialicon{\faTwitter} \href{https://twitter.com/your-handle}{your-handle}
+%    }
+%\end{center}
+
+\vspace{-8mm}
+\begin{center}
+    \small{Address: 3403 Center 3, 744 Motooka, Nishi-ku, Fukuoka, 819-0395, Japan.}
+\end{center}
+
+\vspace{-4mm}
+
+%
+%\section{\textbf{Objective}}
+%\vspace{1mm}
+%\small{
+%Seeking a challenging position in [your field] to leverage my expertise in [your key skills]. Aiming to contribute to innovative projects at the intersection of [your interests] and practical problem-solving in fields such as [specific areas of interest].
+%}
+%\vspace{-2mm}
+%
+
+\section{\textcolor{darkblue}{\textbf{Research Interests}}}
+Artificial Intelligence in Education, Educational Data Mining, Learning Analytics, Human-Computer Interaction, and Recommendation Systems.
+
+
+\section{\textcolor{darkblue}{\textbf{Employment}}}
+\vspace{-0.4mm}
+  \resumeSubHeadingListStart
+  \resumeSubheading
+      {Kyushu University}{Fukuoka, Japan}
+      {Assistant Professor}{April 2023 - Present}
+
+  \resumeSubheading
+      {Osaka Kyoiku University}{Osaka, Japan}
+      {Assistant Professor (Cross Appointment)}{October 2026 - Present}
+
+  \resumeSubheading
+    {OpenDNA Inc.}{Tokyo, Japan}
+    {Artificial Intelligence Researcher}{November 2021 - March 2023}
+\resumeSubHeadingListEnd
+\vspace{-4mm}
+
+\section{\textcolor{darkblue}{\textbf{Education}}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{Kyushu University}{Fukuoka, Japan}
+{Information Science and Electrical Engineering}{October 2018 - September 2021}
+{Doctoral Degree}
+
+\resumeSubheading
+{Southwest Jiaotong University}{Chengdu, China}
+{Information and Communication Engineering}{September 2014 - June 2017}
+{Master’s Degree}
+
+\resumeSubheading
+{Southwest Jiaotong University}{Chengdu, China}
+{Information and Communication Engineering}
+{September 2010 - June 2014}
+{Bachelor’s Degree}
+
+\resumeSubHeadingListEnd
+\vspace{-4mm}
+
+
+\section{\textcolor{darkblue}{\textbf{Publications}} \textcolor{darkblue}{\scriptsize J=Journal, B=Book Chapter, C=International Conference, D=Domestic Conference}}
+\vspace{0.2mm}
+\small{
+\begin{enumerate}[leftmargin=*, labelsep=0.5em, align=left, widest={[\textbf{C.51}]}, itemindent=0em, label={\textbf{[\arabic*]}]}]
+
+\item[\textbf{[J.13]}] \textbf{Boxuan Ma}, Yinjie Xie, Huiyong Li, Gen Li, Li Chen, Atsushi Shimada and Shin'ichi Konomi (2026). \textbf{Design Implications for Student and Educator Needs in AI-Supported Programming Learning Tools}. \textit{International Journal of Human-Computer Interaction}.
+\item[\textbf{[J.12]}] Yinjie Xie, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{Designing Inclusive Budgeting Tools: Understanding Financial Behavior and Cultural Differences Among University Students}. \textit{International Journal of Human-Computer Interaction}.
+\item[\textbf{[J.11]}] Chenghao Gu, Jiadong Chen, Tianyuan Yang, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{Detecting Speaking Intention from Motion and Physiological Data to Support Leadership in VR Group Discussions}. \textit{IEEE Transactions on Computational Social Systems}.
+\item[\textbf{[J.10]}] Chenghao Gu, Jiadong Chen, Tianyuan Yang, Feike Xu, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{Analyzing VR-based Group Discussions for Timely Speaking-Intention Feedback to Leaders}. \textit{Frontiers in Computer Science}, Vol.~8.
+\item[\textbf{[J.9]}] Baofeng Ren, Tianyuan Yang, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{Leveraging Personalized Diversity Level for Recommendations with Knowledge Graph}. \textit{Journal of Intelligent Information Systems}, Vol.~64, No.~2.
+\item[\textbf{[J.8]}] \textbf{Boxuan Ma}, Sora Fukui, Yuji Ando and Shin'ichi Konomi (2026). \textbf{Integrating Forgetting Behavior and Linguistic Features in Language Learning Models}. \textit{ACM Transactions on Knowledge Discovery from Data}, Vol.~20, No.~2:19.
+\item[\textbf{[J.7]}] Tianyuan Yang, Baofeng Ren, Chenghao Gu, Feike Xu, \textbf{Boxuan Ma} and Shin'ichi Konomi (2025). \textbf{Enhancing Course Recommendation with LLM-Generated Concepts: A Unified Framework for Side Information Integration}. \textit{Big Data and Cognitive Computing}, Vol.~9, No.~12:311.
+\item[\textbf{[J.6]}] Tianyuan Yang, Baofeng Ren, Chenghao Gu, Tianjia He, \textbf{Boxuan Ma} and Shin'ichi Konomi (2025). \textbf{Leveraging LLMs for Automated Extraction and Structuring of Educational Concepts and Relationships}. \textit{Machine Learning and Knowledge Extraction}, Vol.~7, No.~3:103.
+\item[\textbf{[J.5]}] Jiadong Chen, Chenghao Gu, Jiayi Zhang, Zhankun Liu, \textbf{Boxuan Ma} and Shin'ichi Konomi (2024). \textbf{Coordination of Speaking Opportunities in Virtual Reality: Analyzing Interaction Dynamics and Context-Aware Strategies}. \textit{Applied Sciences}, Vol.~14, No.~24:12071.
+\item[\textbf{[J.4]}] \textbf{Boxuan Ma}, Sora Fukui, Yuji Ando and Shin'ichi Konomi (2024). \textbf{Investigating Concept Definition and Skill Modeling for Cognitive Diagnosis in Language Learning}. \textit{Journal of Educational Data Mining (JEDM)}, Vol.~16, No.~1, pp.~303--329. \\ \textcolor{red!80!black}{Invited Paper}
+\item[\textbf{[J.3]}] \textbf{Boxuan Ma}, Min Lu, Yuta Taniguchi and Shin'ichi Konomi (2022). \textbf{Exploring Jump Back Behavior Patterns and Reasons in E-book System}. \textit{Smart Learning Environments}, Vol.~9, No.~2.
+\item[\textbf{[J.2]}] \textbf{Boxuan Ma}, Min Lu, Yuta Taniguchi and Shin'ichi Konomi (2021). \textbf{Investigating Course Choice Motivations In University Environments}. \textit{Smart Learning Environments}, Vol.~8, No.~31.
+\item[\textbf{[J.1]}] \textbf{Boxuan Ma}, Min Lu, Yuta Taniguchi and Shin'ichi Konomi (2021). \textbf{CourseQ: The Impact of Visual and Interactive Course Recommendation in University Environments}. \textit{Research and Practice in Technology Enhanced Learning}, Vol.~16, No.~18.
+\item[\textbf{[B.2]}] \textbf{Boxuan Ma}, Li Chen and Shin'ichi Konomi (2026). \textbf{Examining Student-ChatGPT Interactions in Programming Education}. \textit{Teaching and Learning in the Generative Artificial Intelligence Age}, pp.~97--114. \\ \textcolor{red!80!black}{Invited Paper}
+\item[\textbf{[B.1]}] Tianyuan Yang, Baofeng Ren, Chenghao Gu, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{Leveraging GPT for Concept Generation and Knowledge Graph Construction in Educational Recommender Systems}. \textit{Teaching and Learning in the Generative Artificial Intelligence Age}, pp.~75--96. \\ \textcolor{red!80!black}{Invited Paper}
+\item[\textbf{[C.51]}] \textbf{Boxuan Ma}, Li Chen and Gen Li (2026). \textbf{CoThink: A CPS-Aware Role-Based Multi-Agent System for Collaborative Group Work}. In \textit{International Conference on Principles and Practice of Multi-Agent Systems (PRIMA 2026)}.
+\item[\textbf{[C.50]}] Yinjie Xie, Dan Yuan, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{What Users Disclose in AI Budgeting Conversations and How Disclosure Relates to Feedback Evaluation}. In \textit{International Conference on Intelligent Human-Computer Interaction (IHCI 2026)}.
+\item[\textbf{[C.49]}] Gen Li, Li Chen, Sijie Xiong, \textbf{Boxuan Ma}, Daisuke Deguchi, Takayoshi Yamashita and Atsushi Shimada (2026). \textbf{Self-Assessment Tracing: A New Task and its Asymmetric Coupling with Knowledge Tracing}. In \textit{International Conference on Advanced Data Mining and Applications (ADMA 2026)}.
+\item[\textbf{[C.48]}] Gen Li, Li Chen, Sijie Xiong, \textbf{Boxuan Ma}, Daisuke Deguchi, Takayoshi Yamashita and Atsushi Shimada (2026). \textbf{CoBo: A Coverage-Boundary Representation for Interpretable At-Risk Prediction from Student Reflections}. In \textit{Pacific Rim International Conference on Artificial Intelligence (PRICAI 2026)}.
+\item[\textbf{[C.47]}] \textbf{Boxuan Ma}, Huiyong Li, Kyosuke Takami and Shin'ichi Konomi (2026). \textbf{CodeRunner Agent: An Open-Source Moodle Plugin for LLM-Powered Self-Regulated Learning Support in Programming Practice}. In \textit{International Conference on Computers in Education (ICCE 2026)}.
+\item[\textbf{[C.46]}] \textbf{Boxuan Ma}, Kyosuke Takami and Shin'ichi Konomi (2026). \textbf{CodeExemplar: Example-Based Scaffolding for Introductory Programming in the GenAI Era}. In \textit{International Conference on Computers in Education (ICCE 2026)}.
+\item[\textbf{[C.45]}] Li Chen, Gen Li, \textbf{Boxuan Ma}, Ryota Yamamoto, Kyosuke Takami, Xuewang Geng, Masanori Yamada and Atsushi Shimada (2026). \textbf{Knowing Isn't What You Think: Designing a Dashboard for Supporting Knowledge Monitoring}. In \textit{International Conference on Computers in Education (ICCE 2026)}.
+\item[\textbf{[C.44]}] Kyosuke Takami, \textbf{Boxuan Ma}, Hiroaki Funayama, Li Chen and Kazuki Niwayama (2026). \textbf{Privacy-Preserving LLM-Assisted Learning Analytics with Natural Language Interfaces for Educational Data}. In \textit{International Conference on Computers in Education (ICCE 2026)}.
+\item[\textbf{[C.43]}] Baofeng Ren, Tianyuan Yang, Chenghao Gu, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{MIRAGE: Multi-Intent Reasoning and Adaptive Graph Embedding for Recommendation}. In \textit{Proceedings of the International Conference on Database and Expert Systems Applications (DEXA 2026)}. \\ \textcolor{red!80!black}{Norman Revell Best Paper Award}
+\item[\textbf{[C.42]}] Baofeng Ren, Tianyuan Yang, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{LLM-Guided Semantic Profiling for Personalized Diversity Movie Re-ranking}. In \textit{Proceedings of the APWeb-WAIM International Joint Conference on Web and Big Data (APWeb-WAIM 2026)}.
+\item[\textbf{[C.41]}] Yinjie Xie, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{Tone Matters in AI Budgeting Feedback: Evidence of User Heterogeneity}. In \textit{Proceedings of the Working Conference of the IFIP WG 13.6 Human Work Interaction Design (HWID 2026)}.
+\item[\textbf{[C.40]}] Masanori Yamada, Xuewang Geng, Shuki Nagao, Kohei Ozaki, \textbf{Boxuan Ma} and Li Chen (2026). \textbf{Learner-Initiated Difficulty Signals for Personalized Formative Quizzes in Digital Textbooks}. In \textit{Proceedings of the IEEE International Conference on Advanced Learning Technologies (ICALT 2026)}.
+\item[\textbf{[C.39]}] Huiyong Li and \textbf{Boxuan Ma} (2026). \textbf{Multimodal Learning Analytics for Programming: Cognitive Difficulties, Attention Dynamics, and Physiological Regulation}. In \textit{Proceedings of the International Conference on Educational Data Mining (EDM 2026)}.
+\item[\textbf{[C.38]}] Tianyuan Yang, Baofeng Ren, Chenghao Gu, Feike Xu, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{Augmenting Student Profiles and Course Attributes with Large Language Models for Course Recommendation}. In \textit{Proceedings of the International Conference on Educational Data Mining (EDM 2026)}.
+\item[\textbf{[C.37]}] \textbf{Boxuan Ma} and Huiyong Li (2026). \textbf{Deriving Common Novice Programming Error Patterns from Student Submissions using LLMs}. In \textit{Proceedings of the International Conference on Learning Evidence and Analytics (ICLEA 2026)}.
+\item[\textbf{[C.36]}] Gen Li, Li Chen, Cheng Tang, \textbf{Boxuan Ma}, Yuncheng Jiang, Daisuke Deguchi, Takayoshi Yamashita and Atsushi Shimada (2026). \textbf{Capture-Calibrate-Coach: A Graph-Based Framework for Knowledge Monitoring Estimation and Adaptive Feedback}. In \textit{Proceedings of the International Conference on Artificial Intelligence in Education (AIED 2026)}.
+\item[\textbf{[C.35]}] Takuya Iwanaga, Huiyong Li, \textbf{Boxuan Ma} and Chengjiu Yin (2026). \textbf{Visual Attention Transitions and Self-Regulated Help Seeking in Programming Comprehension}. In \textit{Proceedings of the International Conference on Artificial Intelligence in Education (AIED 2026)}.
+\item[\textbf{[C.34]}] Shin'ichi Konomi, Doreen Mushi, Lulu Gao, Baofeng Ren, Tianyuan Yang, Jiadong Chen, \textbf{Boxuan Ma}, Yuuki Nishiyama, Koheni Hatano and Kaoru Sezaki (2026). \textbf{DCL4D: Enabling Distributed Cooperative Learning Environments for Development}. In \textit{Proceedings of the International Conference on Human-Computer Interaction (HCII 2026)}.
+\item[\textbf{[C.33]}] \textbf{Boxuan Ma}, Li Chen, Xuewang Geng and Masanori Yamada (2026). \textbf{Understanding Study Approaches in E-Book Logs and Their Relation to Metacognition and Performance}. In \textit{Proceedings of the International Conference on Learning Analytics \& Knowledge (LAK26)}.
+\item[\textbf{[C.32]}] \textbf{Boxuan Ma} (2026). \textbf{Designing a Meta-Reflective Dashboard for Understanding Students' Use of AI}. In \textit{Proceedings of the International Conference on Learning Analytics \& Knowledge (LAK26)}.
+\item[\textbf{[C.31]}] Yinjie Xie, \textbf{Boxuan Ma} and Shin'ichi Konomi (2026). \textbf{Who Budgets and Who Doesn't? Exploring Student Group Differences to Design Inclusive Budgeting Tools}. In \textit{Proceedings of the ACM/SIGAPP Symposium on Applied Computing (SAC 2026)}.
+\item[\textbf{[C.30]}] \textbf{Boxuan Ma}, Md Akib Zabed Khan, Tianyuan Yang, Agoritsa Polyzou and Shin'ichi Konomi (2025). \textbf{Evaluating the Effectiveness of Large Language Models for Course Recommendation Tasks}. In \textit{Proceedings of the International Conference on Computers in Education (ICCE 2025)}.
+\item[\textbf{[C.29]}] Huiyong Li and \textbf{Boxuan Ma} (2025). \textbf{CodeRunner Agent: Integrating AI Feedback and Self-Regulated Learning to Support Programming Education}. In \textit{Proceedings of the International Conference on Computers in Education (ICCE 2025)}.
+\item[\textbf{[C.28]}] Huiyong Li, \textbf{Boxuan Ma} and Chengjiu Yin (2025). \textbf{Examining Metacognitive Difficulties in Learning Programming: Analysis of Student Behavior and Strategy}. In \textit{Proceedings of the International Conference on Learning Evidence and Analytics (ICLEA 2025)}. \\ \textcolor{red!80!black}{Best Short Paper Award}
+\item[\textbf{[C.27]}] \textbf{Boxuan Ma}, Sora Fukui, Yuji Ando and Shin'ichi Konomi (2025). \textbf{Personalized Language Learning Using Spaced Repetition Scheduling}. In \textit{Proceedings of the International Conference on Artificial Intelligence in Education (AIED 2025)}.
+\item[\textbf{[C.26]}] Cheng Tang, Bin Li, Haichuan Yang, Gen Li, Li Chen, \textbf{Boxuan Ma} and Atsushi Shimada (2025). \textbf{Ensemble Dendritic Neuron Models for Visual Analytics of Learning Behavior and Early Risk Prediction}. In \textit{Proceedings of the International Conference on Artificial Intelligence in Education (AIED 2025)}.
+\item[\textbf{[C.25]}] \textbf{Boxuan Ma}, Liyuan Guo, Tianyuan Yang and Jihong Ding (2025). \textbf{How Generative AI Impact Student Emotion and Engagement in Programming Tasks?}. In \textit{Proceedings of the International Conference on Artificial Intelligence in Education (AIED 2025)}.
+\item[\textbf{[C.24]}] \textbf{Boxuan Ma}, Min Lu, Li Chen and Masanori Yamada (2025). \textbf{Connect E-book Content and Structure to Student Jump-Back Behavior}. In \textit{Proceedings of the IEEE International Conference on Advanced Learning Technologies (ICALT 2025)}.
+\item[\textbf{[C.23]}] Li Chen, Gen Li, \textbf{Boxuan Ma}, Cheng Tang, Masanori Yamada and Atsushi Shimada (2025). \textbf{Classifying Knowledge Nodes and Analyzing Activation Features: An Integrated Knowledge Graph Approach for Collaborative Problem-Solving}. In \textit{Proceedings of the IEEE International Conference on Advanced Learning Technologies (ICALT 2025)}.
+\item[\textbf{[C.22]}] Huiyong Li and \textbf{Boxuan Ma} (2025). \textbf{Design of AI-Powered Tool for Self-Regulation Support in Programming Education}. In \textit{CHI 2025 Workshop: Augmented Educators and AI: Shaping the Future of Human-AI Collaboration in Learning (CHI2025)}.
+\item[\textbf{[C.21]}] \textbf{Boxuan Ma} and Li Chen (2025). \textbf{A Framework for Constructing Concept Maps from E-Books Using Large Language Models: Challenges and Future Directions}. In \textit{The 7th Workshop on Predicting Performance Based on the Analysis of Reading Behavior (DC@LAK25)}.
+\item[\textbf{[C.20]}] Min Lu, \textbf{Boxuan Ma}, Xuewang Geng and Masanori Yamada (2025). \textbf{Enhancing E-Book Learning Dashboards with GPT-Assisted Page Grouping and Adaptive Navigation Link Visualization}. In \textit{Companion Proceedings of the International Conference on Learning Analytics \& Knowledge (LAK25)}.
+\item[\textbf{[C.19]}] Tianyuan Yang, Baofeng Ren, Chenghao Gu, \textbf{Boxuan Ma}, Tianjia He and Shin'ichi Konomi (2025). \textbf{Towards Better Course Recommendations: Integrating Multi-Perspective Meta-Paths and Knowledge Graphs}. In \textit{Proceedings of the International Conference on Learning Analytics \& Knowledge (LAK25)}, pp.~137--147.
+\item[\textbf{[C.18]}] Tianyuan Yang, Baofeng Ren, \textbf{Boxuan Ma}, Tianjia He, Chenghao Gu and Shin'ichi Konomi (2024). \textbf{Boosting Course Recommendation Explainability: A Knowledge Entity-Aware Model using Deep Learning}. In \textit{Proceedings of the International Conference on Computers in Education (ICCE 2024)}.
+\item[\textbf{[C.17]}] \textbf{Boxuan Ma}, Li Chen and Shin'ichi Konomi (2024). \textbf{Exploring Student Perception and Interaction Using ChatGPT In Programming Education}. In \textit{Proceedings of the International Conference on Cognition and Exploratory Learning in Digital Age (CELDA 2024)}, pp.~35--42.
+\item[\textbf{[C.16]}] Tianyuan Yang, Baofeng Ren, Chenghao Gu, \textbf{Boxuan Ma} and Shin'ichi Konomi (2024). \textbf{Leveraging ChatGPT For Automated Knowledge Concept Generation}. In \textit{Proceedings of the International Conference on Cognition and Exploratory Learning in Digital Age (CELDA 2024)}, pp.~75--82. \\ \textcolor{red!80!black}{Best Paper Award}
+\item[\textbf{[C.15]}] Li Chen, Gen Li, \textbf{Boxuan Ma}, Cheng Tang and Masanori Yamada (2024). \textbf{A Three-Step Knowledge Graph Approach Using LLMs In Collaborative Problem Solving-based Stem Education}. In \textit{Proceedings of the International Conference on Cognition and Exploratory Learning in Digital Age (CELDA 2024)}, pp.~51--58.
+\item[\textbf{[C.14]}] Tianyuan Yang, Baofeng Ren, \textbf{Boxuan Ma}, Md Akib Zabed Khan, Tianjia He and Shin'ichi Konomi (2024). \textbf{Making Course Recommendation Explainable: A Knowledge Entity-Aware Model using Deep Learning}. In \textit{Proceedings of the International Conference on Educational Data Mining (EDM 2024)}, pp.~658--663.
+\item[\textbf{[C.13]}] \textbf{Boxuan Ma}, Li Chen and Shin'ichi Konomi (2024). \textbf{Enhancing Programming Education with ChatGPT: A Case Study on Student Perceptions and Interactions in a Python Course}. In \textit{Proceedings of the International Conference on Artificial Intelligence in Education (AIED 2024)}, pp.~113--126.
+\item[\textbf{[C.12]}] Li Chen, Gen Li, \textbf{Boxuan Ma}, Cheng Tang, Fumiya Okubo and Atsushi Shimada (2024). \textbf{How Do Strategies for Using ChatGPT Affect Knowledge Comprehension?}. In \textit{Proceedings of the International Conference on Artificial Intelligence in Education (AIED 2024)}, pp.~151--162.
+\item[\textbf{[C.11]}] \textbf{Boxuan Ma}, Tianyuan Yang and Baofeng Ren (2024). \textbf{A Survey on Explainable Course Recommendation Systems}. In \textit{Proceedings of the International Conference on Distributed, Ambient, and Pervasive Interactions (DAPI 2024), Held as Part of HCI International 2024}, pp.~273--287. \\ \textcolor{red!80!black}{Invited Paper}
+\item[\textbf{[C.10]}] \textbf{Boxuan Ma}, Li Chen and Min Lu (2024). \textbf{Personalized Navigation Recommendation for E-book Page Jump}. In \textit{The 6th Workshop on Predicting Performance Based on the Analysis of Reading Behavior (DC@LAK24)}.
+\item[\textbf{[C.9]}] \textbf{Boxuan Ma}, Gayan Prasad Hettiarachchi, Sora Fukui and Yuji Ando (2023). \textbf{Exploring the Effectiveness of Vocabulary Proficiency Diagnosis Using Linguistic Concept and Skill Modeling}. In \textit{Proceedings of the International Conference on Educational Data Mining (EDM 2023)}, pp.~149--159.
+\item[\textbf{[C.8]}] \textbf{Boxuan Ma}, Gayan Prasad Hettiarachchi, Sora Fukui and Yuji Ando (2023). \textbf{Each Encounter Counts: Modeling Language Learning and Forgetting}. In \textit{Proceedings of the International Conference on Learning Analytics \& Knowledge (LAK23)}, pp.~79--88.
+\item[\textbf{[C.7]}] \textbf{Boxuan Ma}, Gayan Prasad Hettiarachchi and Yuji Ando (2022). \textbf{Format-Aware Item Response Theory for Predicting Vocabulary Proficiency}. In \textit{Proceedings of the International Conference on Educational Data Mining (EDM 2022)}, pp.~695--700.
+\item[\textbf{[C.6]}] \textbf{Boxuan Ma}, Min Lu and Shin'ichi Konomi (2021). \textbf{Understanding Student Slide Reading Patterns During the Pandemic}. In \textit{Proceedings of the International Conference on Cognition and Exploratory Learning in Digital Age (CELDA 2021)}, pp.~87--94.
+\item[\textbf{[C.5]}] \textbf{Boxuan Ma}, Min Lu, Yuta Taniguchi and Shin'ichi Konomi (2021). \textbf{Exploration and Explanation: An Interactive Course Recommendation System for University Environments}. In \textit{Joint Proceedings of the ACM IUI 2021 Workshops -- Fourth International Workshop on Exploratory Search and Interactive Data Analytics (ESIDA 2021)}.
+\item[\textbf{[C.4]}] \textbf{Boxuan Ma}, Yuta Taniguchi and Shin'ichi Konomi (2020). \textbf{Course Recommendation for University Environment}. In \textit{Proceedings of the International Conference on Educational Data Mining (EDM 2020)}, pp.~460--466.
+\item[\textbf{[C.3]}] \textbf{Boxuan Ma}, Jiadong Chen, Chenhao Li, Likun Liu, Min Lu, Yuta Taniguchi and Shin'ichi Konomi (2020). \textbf{Understanding Jump Back Behaviors in E-book System}. In \textit{Companion Proceedings of the International Conference on Learning Analytics \& Knowledge (LAK20)}, pp.~623--631.
+\item[\textbf{[C.2]}] \textbf{Boxuan Ma}, Min Lu, Yuta Taniguchi and Shin'ichi Konomi (2020). \textbf{Exploring the Design Space for Explainable Course Recommendation Systems in University Environments}. In \textit{Companion Proceedings of the International Conference on Learning Analytics \& Knowledge (LAK20)}, pp.~492--499.
+\item[\textbf{[C.1]}] \textbf{Boxuan Ma} (2019). \textbf{Design of an Elective Course Recommendation System for University Environment}. In \textit{Proceedings of the 12th International Conference on Educational Data Mining (EDM 2019)}, pp.~699--701.
+\item[\textbf{[D.7]}] Gen Li, Li Chen, Cheng Tang, \textbf{Boxuan Ma}, Daisuke Deguchi, Takayoshi Yamashita and Atsushi Shimada (2026). \textbf{\begin{CJK}{UTF8}{min}異種グラフを用いた知識モニタリング推定とメタ認知適応型学習支援\end{CJK}}. In \textit{DEIM2026: The 18th Forum on Data Engineering and Information Management}.
+\item[\textbf{[D.6]}] Feike Xu, \textbf{Boxuan Ma} and Shin'ichi Konomi (2024). \textbf{EEMR: An Emotion-Enhancing Hybrid Recommendation Mechanism for Music Playlists}. In \textit{Special Interest Group on Web Intelligence and Interaction}. \\ \textcolor{red!80!black}{Student Encouragement Award}
+\item[\textbf{[D.5]}] Li Chen, \textbf{Boxuan Ma} and Atsushi Shimada (2024). \textbf{Identification and Comparison of ChatGPT Utilization Strategies for Supporting Computer Science}. In \textit{The Autumn Conference of JSET}.
+\item[\textbf{[D.4]}] Tianyuan Yang, Baofeng Ren, \textbf{Boxuan Ma} and Shin'ichi Konomi (2024). \textbf{Making Course Recommender Systems Interpretable: A Feature-aware Deep Learning-based Approach}. In \textit{The 86th National Convention of IPSJ}.
+\item[\textbf{[D.3]}] \textbf{Boxuan Ma}, Yuta Taniguchi and Shin'ichi Konomi (2019). \textbf{Learning Path Recommendation In University Environments Based on Sequence Mining}. In \textit{The 81st National Convention of IPSJ}, pp.~287--288.
+\item[\textbf{[D.2]}] \textbf{Boxuan Ma}, Yuta Taniguchi and Shin'ichi Konomi (2019). \textbf{Design a Course Recommendation System Based on Association Rule for Hybrid Learning Environments}. In \textit{Hinokuni-Land of Fire Information Processing Symposium}, pp.~1--7.
+\item[\textbf{[D.1]}] \textbf{Boxuan Ma}, Yuta Taniguchi and Shin'ichi Konomi (2018). \textbf{Comparative Analysis of Adaptive Learning Path Recommendation Algorithms}. In \textit{Joint Conference of Electrical, Electronics and Information Engineers in Kyushu}.
+
+\end{enumerate}
+
+}
+
+%\section{\textbf{Honors and Awards}}
+%\vspace{-0.4mm}
+%\resumeSubHeadingListStart
+
+%\resumeProject
+%  {Award Name A}
+%  {Awarding Institution/Organization}
+%  {Month Year}
+%  {{}[\href{https://award-link-a.com}{\textcolor{darkblue}{\faIcon{globe}}}]}
+
+%\resumeProject
+%  {Award Name B}
+%  {Awarding Institution/Organization}
+%  {Month Year}
+%  {{}[\href{https://award-link-b.com}{\textcolor{darkblue}{\faIcon{globe}}}]}
+
+%\resumeSubHeadingListEnd
+
+%\vspace{-6mm}
+
+
+
+\section{\textcolor{darkblue}{\textbf{Honors and Awards}}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+
+\resumeProject
+  {Norman Revell Best Paper Award}
+  {International Conference on Database and Expert Systems Applications (DEXA 2026)}
+  {2026}
+  {}
+
+\resumeProject
+  {Best Short Paper Award}
+  {International Conference on Learning Evidence and Analytics (ICLEA 2025)}
+  {2025}
+  {}
+
+\resumeProject
+  {Best Paper Award}
+  {International Conference on Cognition and Exploratory Learning in Digital Age (CELDA 2024)}
+  {2024}
+  {}
+
+\resumeProject
+  {Student Encouragement Award}
+  {Special Interest Group on Web Intelligence and Interaction}
+  {2024}
+  {}
+
+\resumeSubHeadingListEnd
+\vspace{-4mm}
+
+\section{\textcolor{darkblue}{\textbf{Professional Services}}}
+
+{\textcolor{darkblue}{\textbf{Journal Reviewing}}}
+\vspace{-1mm}
+\resumeSubHeadingListStart
+\item Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies (IMWUT)
+\item IEEE Transactions on Knowledge and Data Engineering (TKDE)
+\item IEEE Transactions on Learning Technologies (TLT)
+\item ACM Transactions on Recommender Systems (TORS)
+\item ACM Transactions on Computing Education (TOCE)
+\item Information Processing \& Management (IPM)
+\item Knowledge-Based Systems (KBS)
+\item Neurocomputing
+\item Big Data Mining and Analytics (BDMA)
+\item International Journal of Human-Computer Interaction (IJHCI)
+\item Journal of Educational Data Mining (JEDM)
+\item International Journal of Artificial Intelligence in Education (IJAIED)
+\item Smart Learning Environments (SLE)
+\item Interactive Learning Environments (ILE)
+\item Computers in Human Behavior Reports (CHBR)
+\item Research and Practice in Technology Enhanced Learning (RPTEL)
+\item Technology, Knowledge and Learning (TKNL)
+\item Humanities and Social Sciences Communications (HSSC)
+\item Frontiers in Psychology
+\item Contemporary Educational Technology (CET)
+\item Discover Education
+\item Discover Artificial Intelligence
+\item Cogent Education
+\item Connection Science
+\item Computers
+\resumeSubHeadingListEnd
+\vspace{-2mm}
+\vspace{-0.4mm}
+{\textcolor{darkblue}{\textbf{Conference Reviewing}}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+
+\item The ACM Conference on Human Factors in Computing Systems (CHI2026)
+\resumeSubHeadingListEnd
+\vspace{-2mm}
+\vspace{-0.4mm}
+{\textcolor{darkblue}{\textbf{Program Committee}}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+\item The ACM Conference on Intelligent User Interfaces (IUI2026, IUI2027)
+\item  The ACM/SIGAPP Symposium on Applied Computing (SAC2026, SAC2027)
+\item International Conference on Learning Analytics \& Knowledge (LAK26, LAK27)
+\item International Conference on Learning Evidence and Analytics (ICLEA2025, ICLEA2026)
+\item International Conference on Artificial Intelligence in Education (AIED2025, AIED2026)
+\item IEEE International Conference on Advanced Learning Technologies (ICALT2025, ICALT2026)
+\item International Conference on Educational Data Mining (EDM2024, EDM2025, EDM2026)
+\resumeSubHeadingListEnd
+\vspace{-2mm}
+{\textcolor{darkblue}{\textbf{Organizing Committee}}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+\item {[Poster \& Demo Track Co-Chair]} International Conference on Educational Data Mining (EDM2027)
+\item {[Co-Organizer]} LBAA: Workshop on Predicting Performance from Reading and Learning Behavior and Orchestrating Human and AI Agency (Learning Behavior and AI Agency @ICCE2026)
+\item {[Co-Organizer]} HAI-Agency: Workshop on Orchestrating Human and AI Agency for Proactive and Reflective Learning (HAI-Agency@AIED2026)
+\item {[Local Organizing Committee Member]} International Conference on Learning Evidence and Analytics (ICLEA2025)
+\resumeSubHeadingListEnd
+\vspace{-2mm}
+{\textcolor{darkblue}{\textbf{Proceedings Editor}}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+\item Proceedings of the Workshop on Orchestrating Human and AI Agency for Proactive and Reflective Learning (HAI-Agency@AIED2026), CEUR-WS Vol-4248. \href{https://ceur-ws.org/Vol-4248/}{[Link]}
+\resumeSubHeadingListEnd
+\vspace{-2mm}
+{\textcolor{darkblue}{\textbf{Session Chair}}}
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+\item IEEE International Conference on Advanced Learning Technologies (ICALT2025) [Session: Big Data in Education and Learning Analytics (BDELA)]
+
+\resumeSubHeadingListEnd
+
+
+\vspace{-6mm}
+\section{\textcolor{darkblue}{\textbf{Research Grants}}}
+
+\vspace{-0.4mm}
+\resumeSubHeadingListStart
+
+\resumeProject
+  {A Framework for Fast, Accurate, and Explainable Computerized Adaptive Language Test. (PI)}
+  {JSPS No.24K20903}
+  {2024-2027}
+  
+\resumeProject
+  {Evidence-Informed Teaching Improvement for STEM Talent Development. (Co-I)}
+  {The Joint Research Program with Fukuoka City}
+  {2026-2027}
+
+\resumeProject 
+  {Design and Evaluation of a Data-Driven Learning Support Environment. (Co-I)}
+  {The Joint Research Program with Fukuoka Municipal Fukuoka Girls' High School}
+  {2026-2027}
+
+\resumeProject
+   {Teaching-Material Recommendation and Generation via Learning Analytics and GenAI. (Co-I)}
+   {The Okawa Foundation for Information and Telecommunications}
+   {2025-2026} 
+
+\resumeProject
+  {ICT Curriculum Design and Evaluation for STEM Talent in the Digital Society. (Co-I)}
+  {The Joint Research Program with Fukuoka City Board of Education}
+  {2025-2026}
+
+\resumeProject
+  {The Study on English Language Learning Support Systems. (PI)}
+  {The Joint Research Program with Obunsha Inc. \& OpenDNA Inc.}
+  {2023-2027}
+  
+\resumeProject
+  {Exploring Forgetting Behavior From Learning Data for Enhancing Knowledge Tracing. (PI)}
+  {Education and Research Support Program on Mathematical and Data Science, Kyushu University}
+  {2023-2024}
+
+
+\resumeProject
+  {Distributed Cooperative Learning Analytics for Developing Communities. (Co-I)}
+  {JSPS No.20H00622}
+  {2020-2024}
+
+
+
+\resumeSubHeadingListEnd
+
+
+
+\vspace{-4mm}
+
+\section{\textcolor{darkblue}{\textbf{Teaching Experience}}}
+
+\textcolor{darkblue}{Course Instructor}
+\vspace{-2mm}
+\resumeSubHeadingListStart
+
+\resumeProject
+  {Informatics G \& H (E/J Bilingual Course)}
+  {Kyushu University}
+  {2026-2027 Spring Quarter, Summer Quarter}
+
+\resumeProject
+  {Kikan Education Seminar (English Class)}
+  {Kyushu University}
+  {2026-2027 Summer Quarter}
+
+\resumeProject
+  {Information Science I \& II}
+  {Kyushu University}
+  {2026-2027 1st Semester}
+
+\resumeProject
+  {Python Programming Exercise}
+  {Kyushu University}
+  {2026-2027 Summer Quarter, 2nd Semester, Winter Quarter}
+
+\resumeProject
+  {Methodologies for Practical Data Analysis 1 \& 2 (E/J Bilingual Course)}
+  {Kyushu University}
+  {2025-2026 Spring Quarter, Summer Quarter}
+
+\resumeProject
+  {Kikan Education Seminar (English Class)}
+  {Kyushu University}
+  {2025-2026 Summer Quarter}
+
+\resumeProject
+  {Information Science I \& II}
+  {Kyushu University}
+  {2025-2026 1st Semester}
+
+\resumeProject
+  {Python Programming Exercise}
+  {Kyushu University}
+  {2025-2026 2nd Semester, Winter Quarter}
+
+\resumeProject
+  {Kikan Education Seminar (English Class)}
+  {Kyushu University}
+  {2024-2025 Summer Quarter}
+
+\resumeProject
+  {Methodologies for Practical Data Analysis (E/J Bilingual Course)}
+  {Kyushu University}
+  {2024-2025 Spring Quarter, Autumn Quarter}
+
+\resumeProject
+  {Computer Programming Exercise (English Class)}
+  {Kyushu University}
+  {2024-2025 1st Semester}
+
+\resumeProject
+  {Python Programming Exercise}
+  {Kyushu University}
+  {2024-2025 Winter Quarter*2}
+
+\resumeProject
+  {Kikan Education Seminar}
+  {Kyushu University}
+  {2023-2024 Summer Quarter}
+
+\resumeProject
+  {Python Programming Exercise}
+  {Kyushu University}
+  {2023-2024 1st Semester, Summer Quarter, Winter Quarter}
+
+\resumeSubHeadingListEnd
+\vspace{-0.4mm}
+
+\textcolor{darkblue}{Teaching Fellow}
+\vspace{-2mm}
+\resumeSubHeadingListStart
+
+\resumeProject
+  {Fundamentals of Data Science}
+  {Kyushu University}
+  {2020-2021 1st Semester}
+
+\resumeSubHeadingListEnd
+\vspace{-0.4mm}
+
+\textcolor{darkblue}{Teaching Assistant}
+\vspace{-2mm}
+\resumeSubHeadingListStart
+
+\resumeProject
+  {Interdisciplinary Collaboration Learning of Social Issues}
+  {Kyushu University}
+  {2020-2021 *2}
+
+\resumeProject
+  {Social Computing}
+  {Kyushu University}
+  {2019-2021 *2}
+
+
+\resumeProject
+  {Fundamentals of Data Science}
+  {Kyushu University}
+  {2019-2020 1st Semester}
+
+\resumeProject
+  {Information Science}
+  {Kyushu University}
+  {2018-2020 *5}
+
+
+\resumeSubHeadingListEnd
+
+\vspace{-4mm}
+
+\section{\textcolor{darkblue}{\textbf{Invited Talk}}}
+\resumeSubHeadingListStart
+\item Data-Driven Learning Analytics and Personalized Learning Support Systems.
+4th MediaLib Workshop - Learning Support and Learning Analytics for a New Educational Paradigm. 2023. Kyoto, Japan.
+\item Each Encounter Counts: Modeling Language Learning and Forgetting.
+Forum on Information Technology (FIT2024), Top Conference Session. 2024. Hiroshima, Japan.
+
+\resumeSubHeadingListEnd
+
+%\section{\textbf{References}}
+%\vspace{-0.2mm}
+%\small{
+%\begin{enumerate}[leftmargin=*,labelsep=2mm]
+%\item \textbf{Reference Person 1}\\
+%   Job Title, Department\\
+%   Organization/Institution Name\\
+%   Email: email1@example.com\\
+%   Phone: +X-XXX-XXX-XXXX\\
+%   \textit{Relationship: [e.g., Thesis Advisor, Manager, etc.]}
+
+%\item \textbf{Reference Person 2}\\
+%   Job Title, Department\\
+%   Organization/Institution Name\\
+%   Email: email2@example.com\\
+%   Phone: +X-XXX-XXX-XXXX\\
+%   \textit{Relationship: [e.g., Project Supervisor, Colleague, etc.]}
+
+%\item \textbf{Reference Person 3}\\
+%   Job Title, Department\\
+%  Organization/Institution Name\\
+%   Email: email3@example.com\\
+%   Phone: +X-XXX-XXX-XXXX\\
+%   \textit{Relationship: [e.g., Mentor, Collaborator, etc.]}
+%\end{enumerate}
+%}
+
+\end{document}
